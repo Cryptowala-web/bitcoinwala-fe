@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import HomePage from "./pages/home";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
