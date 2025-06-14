@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin 3D Scroll Animation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --padding: 10vmin;
+            --color-background: #D0CBC7;
+            --font-size-large: 8vw;
+            --font-size-medium: 4vw;
+            --font-size-normal: 2vw;
+        }
+
+        @media only screen and (min-width: 800px) {
+            :root {
+                --font-size-large: 64px;
+                --font-size-medium: 32px;
+                --font-size-normal: 16px;
+            }
+        }
+
+        @media only screen and (max-width: 500px) {
+            :root {
+                --font-size-large: 40px;
+                --font-size-medium: 20px;
+                --font-size-normal: 14px;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            min-height: 100%;
+            font-family: 'Libre Baskerville', serif;
+            background-color: var(--color-background);
+            font-weight: 400;
+            font-size: var(--font-size-normal);
+            overflow-x: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section {
+            position: relative;
+            padding: var(--padding);
+            width: calc(100vw - calc(var(--padding) * 2));
+            height: calc(100vh - calc(var(--padding) * 2));
+            margin: 0 auto;
+            z-index: 2;
+        }
+
+        .section.dark {
+            color: white;
+            background-color: black;
+        }
+
+        .section.right {
+            text-align: right;
+        }
+
+        .blueprint {
+            position: relative;
+            background-color: #131C2A;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+            background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+            background-attachment: fixed;
+        }
+
+        .blueprint svg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            stroke: white;
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        .blueprint .dark {
+            background-color: transparent;
+        }
+
+        .ground-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .parallax {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: -100px;
+            background-repeat: no-repeat;
+            background-position: top center;
+            background-size: cover;
+            transform-origin: top center;
+        }
+
+        .ground {
+            z-index: -1;
+            /* background-image: url("https://assets.codepen.io/557388/background-reduced.jpg"); */
+            background-image: url(bgs/background-reduced-black2.jpg);
+        }
+
+        .clouds {
+            z-index: 2;
+            background-image: url(bgs/clouds3.png);
+        }
+
+        .sunset {
+            background: url(bgs/sunset-reduced1.jpg) no-repeat top center;
+            background-size: cover;
+            transform-origin: top center;
+        }
+
+        .scroll-cta, .credits {
+            position: absolute;
+            bottom: var(--padding);
+        }
+
+        .scroll-cta {
+            font-size: var(--font-size-medium);
+            opacity: 0;
+        }
+
+        h1, h2 {
+            font-size: var(--font-size-large);
+            margin: 0vmin 0 2vmin 0;
+            font-weight: 700;
+            display: inline;
+        }
+
+        h3 {
+            font-size: var(--font-size-medium);
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .end h2 {
+            margin-bottom: 50vh;
+        }
+
+        .loading {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-medium);
+            z-index: 1000;
+        }
+
+        a {
+            color: white;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            margin-top: 10px;
+        }
+
+        /* SVG Line animations using CSS instead of DrawSVG */
+        .animated-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+
+        .animated-circle {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="loading">Loading</div>
+        <div class="trigger"></div>
+        <div class="section">
+            <h1>Bitcoin.</h1>
+            <h3>The Beginner's Guide.</h3>
+            <p>You've probably heard of it. But what *is* it?</p>
+            <div class="scroll-cta">Scroll</div>
+        </div>
+        <div class="section right">
+            <h2>It's kinda like money...</h2>
+        </div>
+        <div class="ground-container">
+            <div class="parallax ground"></div>
+            <div class="section right">
+                <h2>...but on the internet.</h2>
+                <p>Global, borderless, and fast.</p>
+            </div>
+            <div class="section">
+                <h2>It's decentralized.</h2>
+                <p>No banks. No middlemen. Just you and the blockchain.</p>
+            </div>
+            <div class="section right">
+                <h2>It's verified by computers.</h2>
+                <p>Thousands of them working together.</p>
+            </div>
+            <div class="parallax clouds"></div>
+        </div>
+        <div class="blueprint">
+            <svg width="100%" height="100%" viewBox="0 0 100 100">
+                <line id="line-length" class="animated-line" x1="10" y1="80" x2="90" y2="80" stroke-width="0.5"></line>
+                <path id="line-wingspan" class="animated-line" d="M10 50, L40 35, M60 35 L90 50" stroke-width="0.5"></path>
+                <circle id="circle-phalange" class="animated-circle" cx="60" cy="60" r="15" fill="transparent" stroke-width="0.5"></circle>
+            </svg>
+            <div class="section dark">
+                <h2>The facts and figures.</h2>
+                <p>Time to get into the blocks and chains...</p>
+            </div>
+            <div class="section dark length">
+                <h2>Block Time.</h2>
+                <p>~10 minutes.</p>
+            </div>
+            <div class="section dark wingspan">
+                <h2>Supply Limit.</h2>
+                <p>21 million. That's it. Forever.</p>
+            </div>
+            <div class="section dark phalange">
+                <h2>Mining</h2>
+                <p>Fancy computers solving puzzles. 🧠⚙️</p>
+            </div>
+            <div class="section dark">
+                <h2>Transactions</h2>
+                <p>Encrypted, transparent, and irreversible.</p>
+            </div>
+        </div>
+        <div class="sunset">
+            <div class="section"></div>
+            <div class="section end">
+                <h2>The End... or the Beginning?</h2>
+                <ul class="credits">
+                    <li>Bitcoin data powered by <a href="https://bitcoinwala.ai" target="_blank">Bitcoinwala.ai</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- OBJ Loader -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+    <!-- GSAP (Free CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        console.clear();
+
+        class Scene {
+            constructor(model) {
+                this.views = [
+                    { bottom: 0, height: 1 },
+                    { bottom: 0, height: 0 }
+                ];
+                
+                this.renderer = new THREE.WebGLRenderer({
+                    antialias: true,
+                    alpha: true
+                });
+                
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                this.renderer.setPixelRatio(window.devicePixelRatio);
+
+                document.body.appendChild(this.renderer.domElement);
+                
+                this.scene = new THREE.Scene();
+                
+                for (var ii = 0; ii < this.views.length; ++ii) {
+                    var view = this.views[ii];
+                    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+                    camera.position.fromArray([0, 0, 180]);
+                    camera.layers.disableAll();
+                    camera.layers.enable(ii);
+                    view.camera = camera;
+                    camera.lookAt(new THREE.Vector3(0, 5, 0));
+                }
+                
+                this.light = new THREE.PointLight(0xffffff, 0.75);
+                this.light.position.z = 150;
+                this.light.position.x = 70;
+                this.light.position.y = -20;
+                this.scene.add(this.light);
+
+                this.softLight = new THREE.AmbientLight(0xffffff, 1.5);
+                this.scene.add(this.softLight);
+
+                this.onResize();
+                window.addEventListener('resize', this.onResize, false);
+                
+                var edges = new THREE.EdgesGeometry(model.children[0].geometry);
+                let line = new THREE.LineSegments(edges);
+                line.material.depthTest = false;
+                line.material.opacity = 0.5;
+                line.material.transparent = true;
+                line.position.x = 0.5;
+                line.position.z = -1;
+                line.position.y = 0.2;
+                
+                this.modelGroup = new THREE.Group();
+                
+                model.layers.set(0);
+                line.layers.set(1);
+                    
+                this.modelGroup.add(model);
+                this.modelGroup.add(line);
+                this.scene.add(this.modelGroup);
+            }
+            
+            render = () => {
+                for (var ii = 0; ii < this.views.length; ++ii) {
+                    var view = this.views[ii];
+                    var camera = view.camera;
+
+                    var bottom = Math.floor(this.h * view.bottom);
+                    var height = Math.floor(this.h * view.height);
+
+                    this.renderer.setViewport(0, 0, this.w, this.h);
+                    this.renderer.setScissor(0, bottom, this.w, height);
+                    this.renderer.setScissorTest(true);
+
+                    camera.aspect = this.w / this.h;
+                    this.renderer.render(this.scene, camera);
+                }
+            }
+            
+            onResize = () => {
+                this.w = window.innerWidth;
+                this.h = window.innerHeight;
+                
+                for (var ii = 0; ii < this.views.length; ++ii) {
+                    var view = this.views[ii];
+                    var camera = view.camera;
+                    camera.aspect = this.w / this.h;
+                    let camZ = (screen.width - (this.w * 1)) / 3;
+                    camera.position.z = camZ < 180 ? 180 : camZ;
+                    camera.updateProjectionMatrix();
+                }
+
+                this.renderer.setSize(this.w, this.h);
+                this.render();
+            }
+        }
+
+        function loadModel() {
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Set initial states for SVG elements using CSS transforms
+            gsap.set('#line-length', {strokeDashoffset: 1000})
+            gsap.set('#line-wingspan', {strokeDashoffset: 1000})
+            gsap.set('#circle-phalange', {strokeDashoffset: 100})
+            
+            var object;
+
+            function onModelLoaded() {
+                object.traverse(function (child) {
+                    let mat = new THREE.MeshPhongMaterial({ 
+                        color: 0x171511, 
+                        specular: 0xD0CBC7, 
+                        shininess: 5, 
+                        flatShading: true 
+                    });
+                    child.material = mat;
+                });
+
+                setupAnimation(object);
+            }
+
+            // Create a simple fallback geometry if OBJ fails to load
+            function createFallbackModel() {
+                const geometry = new THREE.CylinderGeometry(0.5, 0.5, 2, 8);
+                const material = new THREE.MeshPhongMaterial({ 
+                    color: 0x171511, 
+                    specular: 0xD0CBC7, 
+                    shininess: 5, 
+                    flatShading: true 
+                });
+                const mesh = new THREE.Mesh(geometry, material);
+                
+                // Create a group to match the expected structure
+                const group = new THREE.Group();
+                group.add(mesh);
+                
+                setupAnimation(group);
+            }
+
+            var manager = new THREE.LoadingManager(onModelLoaded);
+            manager.onProgress = (item, loaded, total) => console.log(item, loaded, total);
+            manager.onError = (url) => {
+                console.log('Failed to load model, using fallback');
+                createFallbackModel();
+            };
+
+            var loader = new THREE.OBJLoader(manager);
+            
+            // Try to load your local model first, fallback to remote if needed
+            // Replace 'your-model.obj' with the actual filename of your downloaded model
+            loader.load('./coin_uv.obj', function (obj) { 
+                object = obj; 
+            }
+            , undefined, function(error) {
+                console.log('Local model failed, trying remote');
+                loader.load('https://res.cloudinary.com/df6tfgugw/raw/upload/v1749755651/coin_uv_t67ftx.obj', 
+                    function (obj) { object = obj; },
+                    undefined,
+                    function(error) {
+                        console.log('Remote model also failed, using fallback geometry');
+                        // createFallbackModel();
+                    }
+                );
+            }
+        );
+        }
+
+        function setupAnimation(model) {
+            let scene = new Scene(model);
+            let plane = scene.modelGroup;
+            
+            gsap.fromTo('canvas', {x: "50%", autoAlpha: 0}, {duration: 1, x: "0%", autoAlpha: 1});
+            gsap.to('.loading', {autoAlpha: 0});
+            gsap.to('.scroll-cta', {opacity: 1});
+            gsap.set('svg', {autoAlpha: 1});
+            
+            let tau = Math.PI * 2;
+
+            gsap.set(plane.rotation, {y: tau * -.25});
+            gsap.set(plane.position, {x: 80, y: -32, z: -60});
+            
+            scene.render();
+            
+            var sectionDuration = 1;
+            
+            // View transitions
+            gsap.fromTo(scene.views[1], 
+                { height: 1, bottom: 0 }, 
+                {
+                    height: 0, bottom: 1,
+                    ease: 'none',
+                    scrollTrigger: {
+                      trigger: ".blueprint",
+                      scrub: true,
+                      start: "bottom bottom",
+                      end: "bottom top"
+                    }
+                });
+            
+            gsap.fromTo(scene.views[1], 
+                { height: 0, bottom: 0 }, 
+                {
+                    height: 1, bottom: 0,
+                    ease: 'none',
+                    scrollTrigger: {
+                      trigger: ".blueprint",
+                      scrub: true,
+                      start: "top bottom",
+                      end: "top top"
+                    }
+                });
+            
+            // Parallax effects
+            gsap.to('.ground', {
+                y: "30%",
+                scrollTrigger: {
+                  trigger: ".ground-container",
+                  scrub: true,
+                  start: "top bottom",
+                  end: "bottom top"
+                }
+            });
+            
+            gsap.from('.clouds', {
+                y: "25%",
+                scrollTrigger: {
+                  trigger: ".ground-container",
+                  scrub: true,
+                  start: "top bottom",
+                  end: "bottom top"
+                }
+            });
+            
+            // SVG line animations (using strokeDashoffset instead of drawSVG)
+            gsap.to('#line-length', {
+                strokeDashoffset: 0,
+                scrollTrigger: {
+                  trigger: ".length",
+                  scrub: true,
+                  start: "top bottom",
+                  end: "top top"
+                }
+            });
+            
+            gsap.to('#line-wingspan', {
+                strokeDashoffset: 0,
+                scrollTrigger: {
+                  trigger: ".wingspan",
+                  scrub: true,
+                  start: "top 25%",
+                  end: "bottom 50%"
+                }
+            });
+            
+            gsap.to('#circle-phalange', {
+                strokeDashoffset: 0,
+                scrollTrigger: {
+                  trigger: ".phalange",
+                  scrub: true,
+                  start: "top 50%",
+                  end: "bottom 100%"
+                }
+            });
+            
+            // Hide animations
+            gsap.to('#line-length', {
+                opacity: 0,
+                strokeDashoffset: 1000,
+                scrollTrigger: {
+                  trigger: ".length",
+                  scrub: true,
+                  start: "top top",
+                  end: "bottom top"
+                }
+            });
+            
+            gsap.to('#line-wingspan', {
+                opacity: 0,
+                strokeDashoffset: 1000,
+                scrollTrigger: {
+                  trigger: ".wingspan",
+                  scrub: true,
+                  start: "top top",
+                  end: "bottom top"
+                }
+            });
+            
+            gsap.to('#circle-phalange', {
+                opacity: 0,
+                strokeDashoffset: 100,
+                scrollTrigger: {
+                  trigger: ".phalange",
+                  scrub: true,
+                  start: "top top",
+                  end: "bottom top"
+                }
+            });
+            
+            // Main animation timeline
+            let tl = new gsap.timeline({
+                onUpdate: scene.render,
+                scrollTrigger: {
+                  trigger: ".content",
+                  scrub: true,
+                  start: "top top",
+                  end: "bottom bottom"
+                },
+                defaults: {duration: sectionDuration, ease: 'power2.inOut'}
+            });
+            
+            let delay = 0;
+            
+            tl.to('.scroll-cta', {duration: 0.25, opacity: 0}, delay)
+            tl.to(plane.position, {x: -10, ease: 'power1.in'}, delay)
+            
+            delay += sectionDuration;
+            
+            tl.to(plane.rotation, {x: tau * .25, y: 0, z: -tau * 0.05, ease: 'power1.inOut'}, delay)
+            tl.to(plane.position, {x: -40, y: 0, z: -60, ease: 'power1.inOut'}, delay)
+            
+            delay += sectionDuration;
+            
+            tl.to(plane.rotation, {x: tau * .25, y: 0, z: tau * 0.05, ease: 'power3.inOut'}, delay)
+            tl.to(plane.position, {x: 40, y: 0, z: -60, ease: 'power2.inOut'}, delay)
+            
+            delay += sectionDuration;
+            
+            tl.to(plane.rotation, {x: tau * .2, y: 0, z: -tau * 0.1, ease: 'power3.inOut'}, delay)
+            tl.to(plane.position, {x: -40, y: 0, z: -30, ease: 'power2.inOut'}, delay)
+            
+            delay += sectionDuration;
+            
+            tl.to(plane.rotation, { x: 0, z: 0, y: tau * .25}, delay)
+            tl.to(plane.position, { x: 0, y: -10, z: 50}, delay)
+            
+            delay += sectionDuration;
+            delay += sectionDuration;
+            
+            tl.to(plane.rotation, {x: tau * 0.25, y: tau *.5, z: 0, ease:'power4.inOut'}, delay)
+            tl.to(plane.position, {z: 30, ease:'power4.inOut'}, delay)
+            
+            delay += sectionDuration;
+            
+            tl.to(plane.rotation, {x: tau * 0.25, y: tau *.5, z: 0, ease:'power4.inOut'}, delay)
+            tl.to(plane.position, {z: 60, x: 30, ease:'power4.inOut'}, delay)
+            
+            delay += sectionDuration;
+            
+            tl.to(plane.rotation, {x: tau * 0.35, y: tau *.75, z: tau * 0.6, ease:'power4.inOut'}, delay)
+            tl.to(plane.position, {z: 100, x: 20, y: 0, ease:'power4.inOut'}, delay)
+            
+            delay += sectionDuration;
+            
+            tl.to(plane.rotation, {x: tau * 0.15, y: tau *.85, z: -tau * 0, ease: 'power1.in'}, delay)
+            tl.to(plane.position, {z: -150, x: 0, y: 0, ease: 'power1.inOut'}, delay)
+            
+            delay += sectionDuration;
+            
+            tl.to(plane.rotation, {duration: sectionDuration, x: -tau * 0.05, y: tau, z: -tau * 0.1, ease: 'none'}, delay)
+            tl.to(plane.position, {duration: sectionDuration, x: 0, y: 30, z: 320, ease: 'power1.in'}, delay)
+            
+            tl.to(scene.light.position, {duration: sectionDuration, x: 0, y: 0, z: 0}, delay)
+        }
+
+        loadModel();
+    </script>
+</body>
+</html>
