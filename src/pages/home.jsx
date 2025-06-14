@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
@@ -7,6 +8,7 @@ import HeroSection from '../components/HeroSection.jsx';
 import MissionSection from '../components/MissionSection.jsx';
 import ComingSoonSection from '../components/ComingSoonSection.jsx';
 import Footer from '../components/Footer.jsx';
+import Bitcoin3DIframe from './Bitcoin3DIframe.js';
 
 function HomePage() {
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
@@ -41,6 +43,15 @@ function HomePage() {
   return (
     <div className="relative min-h-full bg-black text-white font-['Montserrat',_sans-serif] overflow-y-scroll h-screen hide-scrollbar">
       {/* Hero Section */}
+      <motion.div
+        variants={sectionVariants}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={sectionTransition}
+      >
+        <Bitcoin3DIframe />
+      </motion.div>
       <motion.div
         variants={sectionVariants}
         initial="initial"
