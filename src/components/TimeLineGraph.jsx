@@ -239,27 +239,31 @@ const BitcoinTimelineGraph = () => {
   };
 
   return (
-    <div>
+    <div style={{
+      fontFamily: '"Orbitron", sans-serif',
+      letterSpacing: '0.2em',
+      color:"white"
+    }}>
       <header className="pt-10 px-6 left-6 z-30 text-white flex items-center justify-center bg-black">
         <div>
           <h1 className="text-4xl font-bold flex items-center gap-3 mb-2 animate-header">
             <div className="relative h-20 w-20 group">
               <img
-                src="bitlogo-hover.png"
+                src="bitlogo.png"
                 alt="Bitcoin Logo"
-                className="absolute inset-0 h-20 w-20 object-contain transition-opacity duration-300 group-hover:opacity-0"
+                className="absolute inset-0 h-25 w-25 object-contain transition-opacity duration-300 group-hover:opacity-0"
               />
               <img
-                src="bitlogo.png"
+                src="bitlogo-hover.png"
                 alt="Bitcoin Hover Logo"
-                className="absolute inset-0 h-20 w-20 object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                className="absolute inset-0 h-25 w-25 object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               />
             </div>
             Bitcoin Evolution Timeline
           </h1>
 
           <p className="text-gray-300 text-sm">
-            * Hover or click ,Drag nodes to explore Bitcoin's journey
+            Hover or click ,Drag nodes to explore Bitcoin's journey
           </p>
         </div>
       </header>
@@ -267,7 +271,7 @@ const BitcoinTimelineGraph = () => {
       <div
         className="flex items-center justify-center  align-center h-screen pt-40 bg-red relative overflow-hidden  "
         onMouseDown={startGraphPan}
-        >
+      >
 
         <div className="absolute inset-0 pointer-events-none">
           {Array.from({ length: 60 }, (_, i) => (
@@ -339,9 +343,8 @@ const BitcoinTimelineGraph = () => {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div
-                  className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-200 hover:scale-110 z-20 node-container ${
-                    isSelected ? "scale-125" : ""
-                  }`}
+                  className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-200 hover:scale-110 z-20 node-container ${isSelected ? "scale-125" : ""
+                    }`}
                   style={{ left: node.x, top: node.y }}
                   onClick={() => handleNodeClick(node)}
                   onMouseEnter={() => handleNodeHover(node)}

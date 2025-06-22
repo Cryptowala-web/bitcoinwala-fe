@@ -5,14 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bitcoin 3D Scroll Animation</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+        /* @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap'); */
+    /* <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Orbitron:wght@300;400;500&display=swap" rel="stylesheet"> */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Orbitron:wght@300;400;500&display=swap');
+
 
         :root {
             --padding: 10vmin;
-            --color-background: #D0CBC7;
+            --color-background: black;
             --font-size-large: 8vw;
             --font-size-medium: 4vw;
             --font-size-normal: 2vw;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            }
+
+        ::-webkit-scrollbar-track {
+        background: #000; /* Black track */
         }
 
         @media only screen and (min-width: 800px) {
@@ -37,13 +48,16 @@
             box-sizing: border-box;
         }
 
+         /* font-family: "Orbitron", sans-serif; */
+
         html, body {
             min-height: 100%;
-            font-family: 'Libre Baskerville', serif;
+            font-family: "Orbitron", sans-serif;
             background-color: "#000000";
             font-weight: 400;
             font-size: var(--font-size-normal);
             overflow-x: hidden;
+            letter-spacing: 0.2em;
             /* overflow-y: hidden; */
             /* overflow-y: scroll;      */
         }
@@ -156,7 +170,7 @@
         h1, h2 {
             font-size: var(--font-size-large);
             margin: 0vmin 0 2vmin 0;
-            font-weight: 700;
+            font-weight: 500;
             display: inline;
         }
 
@@ -272,10 +286,7 @@
         <div class="sunset">
             <div class="section"></div>
             <div class="section end">
-                <h2>The End... or the Beginning?</h2>
-                <ul class="credits">
-                    <li>Bitcoin data powered by <a href="https://bitcoinwala.ai" target="_blank">Bitcoinwala.ai</a></li>
-                </ul>
+                <h2 style="color: white;">The End... or the Beginning?</h2>
             </div>
         </div>
     </div>

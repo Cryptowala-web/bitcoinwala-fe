@@ -276,7 +276,7 @@ const JelloText = () => {
         maxHeight:'300px',
         height: '100vh',
         background: 'black',
-        fontFamily: "Orbitron",
+        fontFamily: '"Orbitron", sans-serif',
         color: 'white',
         position: 'relative',
         overflow: 'hidden'
@@ -297,7 +297,7 @@ const JelloText = () => {
           fontWeight: 400,
           fontStretch: '150%',
           lineHeight: 0.4,
-          letterSpacing: '0.5vw',
+          letterSpacing: '0.3vw',
           userSelect: 'none',
           textAlign: 'center'
         }}>

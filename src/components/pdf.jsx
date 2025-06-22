@@ -1,11 +1,11 @@
 import { X, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import whitepaperJSON from "./whitepaper.json";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { API } from "../api";
 
 const AnimatedWhitepaperModal = ({ isOpen, onClose }) => {
-    const [data,setData] = useState(whitepaperJSON)
+  const [data, setData] = useState(whitepaperJSON)
   const downloadPDF = () => {
     const link = document.createElement("a");
     link.href = "/BitcoinWala WHITE_PAPER.pdf";
@@ -27,12 +27,18 @@ const AnimatedWhitepaperModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 backdrop-blur-md p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 backdrop-blur-md p-4"
+      style={{
+        fontFamily: '"Orbitron", sans-serif',
+        letterSpacing: '0.2em'
+      }}
+    >
       <div className="absolute inset-0" onClick={onClose} />
 
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
+
         className="relative bg-[#111] text-white max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-xl shadow-xl border border-gray-800 p-6"
       >
         <div className="flex justify-between items-center mb-4">
@@ -41,7 +47,7 @@ const AnimatedWhitepaperModal = ({ isOpen, onClose }) => {
           </h2>
           <div className="flex items-center gap-2">
             <button onClick={downloadPDF} title="Download">
-              <Download className="w-5 h-5 text-blue-400 hover:text-blue-200" />
+              <Download className="w-5 h-5 text-amber-400 hover:text-blue-200" />
             </button>
             <button onClick={onClose} title="Close">
               <X className="w-5 h-5 text-red-400 hover:text-red-200" />
@@ -58,13 +64,19 @@ const AnimatedWhitepaperModal = ({ isOpen, onClose }) => {
             transition={{ delay: idx * 0.2 }}
             className="mb-6"
           >
-            <h3 className="text-lg font-semibold text-cyan-300 mb-2">
+
+            {/* text-amber-500 */}
+            <h3 className="text-lg font-semibold text-amber-300 mb-2">
               {section.heading}
             </h3>
 
-            <div className="space-y-2 text-sm text-gray-200 leading-relaxed">
+            <div className="space-y-2 text-sm text-black-200 leading-relaxed"
+              style={{
+                color: "white"
+              }}
+            >
               <motion.ul
-                className="space-y-2 text-sm leading-relaxed text-gray-200"
+                className="space-y-2 text-sm leading-relaxed text-black-200"
                 initial="hidden"
                 animate="visible"
                 variants={{
@@ -99,7 +111,7 @@ const AnimatedWhitepaperModal = ({ isOpen, onClose }) => {
                   >
                     {line.trim().startsWith("- ") ? (
                       <div key={i} className="flex items-start pl-4">
-                        <span className="mr-2 mt-1 text-cyan-400">•</span>
+                        <span className="mr-2 mt-1 text-black-400">•</span>
                         <p>{line.replace("- ", "")}</p>
                       </div>
                     ) : (

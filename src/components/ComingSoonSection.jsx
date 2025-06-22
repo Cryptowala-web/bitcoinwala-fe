@@ -53,7 +53,7 @@ function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
           <motion.p
             variants={slideUp}
             className="text-xl text-[#4c4747] tracking-wider text-center"
-            style={{ letterSpacing: '0.1em' }}>
+            style={{ letterSpacing: '0.1em' ,color:"white"}}>
             Born Sovereign, Global by Force, Bitcoin by Choice
           </motion.p>
         </motion.div>

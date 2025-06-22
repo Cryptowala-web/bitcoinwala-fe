@@ -12,10 +12,39 @@ import Bitcoin3DIframe from "./Bitcoin3DIframe.js";
 import BitcoinTimelineGraph from "../components/TimeLineGraph.jsx";
 import JelloText from "../components/jest.jsx";
 import HeroModal from "../components/HeroModal.jsx";
+import CardStack from "../components/CardStack.jsx";
+
+
+const staticData = [
+  {
+    title: 'Welcome to the Platform',
+    description: 'Explore new features and stay updated with announcements.',
+    image: 'https://picsum.photos/id/1011/400/250',
+    expiry_date: new Date().toISOString(),
+    click_count: 12,
+  },
+  {
+    title: 'System Maintenance',
+    description: 'Scheduled maintenance on June 25, 10:00 AM to 12:00 PM IST.',
+    image: 'https://picsum.photos/id/1012/400/250',
+    expiry_date: new Date().toISOString(),
+    click_count: 8,
+  },
+  {
+    title: 'Feature Release: Dashboard 2.0',
+    description: 'A brand-new dashboard experience is here with better UX.',
+    image: 'https://picsum.photos/id/1013/400/250',
+    expiry_date: new Date().toISOString(),
+    click_count: 20,
+  },
+];
+
+
 
 function HomePage() {
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [announcementData, setAnnouncementData] = useState(staticData);
 
   useEffect(() => {
     const handleResize = () => {
@@ -25,6 +54,14 @@ function HomePage() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  //  useEffect(() => {
+  //   fetch("http://localhost:5040/announcement/")
+  //     .then((res) => res.json())
+  //     .then((data) => setAnnouncementData(staticData))
+  //     .catch((err) => console.error("Failed to fetch announcements:", err));
+  // }, []);
+
 
   const isMobile = windowWidth < 768;
 
@@ -103,6 +140,17 @@ function HomePage() {
         transition={sectionTransition}
       >
         <BitcoinTimelineGraph />
+      </motion.div>
+
+      <motion.div
+        variants={sectionVariants}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={sectionTransition}
+       
+      >
+        <CardStack  data={announcementData} />
       </motion.div>
 
       {/* Coming Soon Section */}
