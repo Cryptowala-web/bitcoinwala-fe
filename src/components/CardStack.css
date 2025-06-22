@@ -80,12 +80,13 @@ ul li.title h2 {
 }
 
 li.card {
-  background: #FFF;
+  background: black;
   overflow: hidden;
   height: 200px;
   width: 200px;
   border-radius: 10px;
   position: absolute;
+  color: white;
   left: 0px;
   box-shadow: 1px 2px 2px 0 #aaa;
   transition: all 0.4s cubic-bezier(.63,.15,.03,1.12);
@@ -106,7 +107,7 @@ li.card .content h3 {
 }
 li.card .content p {
   font-size: 14px;
-  color: black;
+  color: white;
 }
 
 /* Eye button styling */
@@ -161,7 +162,7 @@ li.card .content p {
   position: relative;
   animation: slideIn 0.3s ease;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  border: 1px solid white;
+  border: 1px solid gray;
 
 }
 .modal-header {
