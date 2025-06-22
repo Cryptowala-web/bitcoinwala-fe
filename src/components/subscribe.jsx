@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import ThankYouModal from "./ThankYouModal";
 import { motion, AnimatePresence } from "framer-motion";
+import { API } from "../api";
 
 function Subscribe({ show, closeModal }) {
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  
   const [formData, setFormData] = useState({
     accountType: "individual",
     companyName: "",
@@ -76,8 +81,9 @@ function Subscribe({ show, closeModal }) {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const formErrors = validateForm();
 
@@ -87,10 +93,44 @@ function Subscribe({ show, closeModal }) {
       return;
     }
 
+    // const handleSubmit = async (e) => {
+    //   e.preventDefault();
+    try {
+      const response = await fetch(`${API}/subscription/subscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phone: formData.phone,
+          organization:
+            formData.accountType === "company" ? formData.companyName : "",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.status !== 201) {
+        setAlertMessage(
+          data.message || "Something went wrong. Please try again."
+        );
+        setAlertVisible(true);
+      } else {
+        setShowThankYou(true);
+      }
+    } catch (error) {
+      console.error("Subscription failed:", error);
+      setAlertMessage(
+        "Failed to subscribe. Please check your network or try again."
+      );
+      setAlertVisible(true);
+    } finally {
+      setLoading(false);
+    }
     console.log("Form submitted:", formData);
     console.log("Setting showThankYou to true");
     setShowThankYou(true);
-    // Don't close the modal yet, let the thank you modal show first
   };
 
   const handleThankYouClose = () => {
@@ -100,7 +140,6 @@ function Subscribe({ show, closeModal }) {
 
   if (!show) return null;
 
-  //logo varient
   const logoVariants = {
     hidden: { y: -50, opacity: 0 },
     visible: {
@@ -234,7 +273,6 @@ function Subscribe({ show, closeModal }) {
                   <h2 className="text-2xl sm:text-3xl font-bold text-white mb-1">
                     Join the New Standard
                   </h2>
-                  
                 </div>
 
                 {/* Form Content */}
@@ -643,12 +681,44 @@ function Subscribe({ show, closeModal }) {
                         className="w-full"
                         whileHover="hover"
                         whileTap="tap"
+                        disabled={loading}
                       >
-                        <img
+                        {/* <img
                           src="/longsubscribe.svg"
                           alt="Subscribe"
                           className="w-full h-full"
-                        />
+                        /> */}
+                        {loading ? (
+                          <div className="flex justify-center items-center py-2 text-white">
+                            <svg
+                              className="animate-spin h-5 w-5 text-white mr-2"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8v8H4z"
+                              ></path>
+                            </svg>
+                            Subscribing...
+                          </div>
+                        ) : (
+                          <img
+                            src="/longsubscribe.svg"
+                            alt="Subscribe"
+                            className="w-full h-full"
+                          />
+                        )}
                       </motion.button>
                     </motion.div>
                   </motion.form>

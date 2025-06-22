@@ -1,11 +1,20 @@
-import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useState } from "react";
+import Subscribe from "./subscribe";
 
 function HeroSection() {
   const ref = React.useRef(null);
+  const [showSubscribe, setShowSubscribe] = useState(false);
+
+  const openSubscribe = () => {
+    console.log("true");
+    setShowSubscribe(true);
+  };
+  const closeSubscribe = () => setShowSubscribe(false);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end start"]
+    offset: ["start start", "end start"],
   });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
 
@@ -17,9 +26,9 @@ function HeroSection() {
       transition: {
         duration: 0,
         when: "beforeChildren",
-        staggerChildren: 0.3
-      }
-    }
+        staggerChildren: 0.3,
+      },
+    },
   };
 
   const itemVariants = {
@@ -27,16 +36,16 @@ function HeroSection() {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] }
-    }
+      transition: { duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] },
+    },
   };
 
   const lineVariants = {
     hidden: { width: 0 },
     visible: {
       width: "6rem", // 24 in tailwind units
-      transition: { duration: 0.8, ease: "easeInOut" }
-    }
+      transition: { duration: 0.8, ease: "easeInOut" },
+    },
   };
 
   return (
@@ -68,18 +77,20 @@ function HeroSection() {
             whileHover={{ scale: 1.02 }}
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-100 mb-10 orbitron"
             style={{
-              fontFamily: 'Orbitron, sans-serif',
-              letterSpacing: '0.1em',
+              fontFamily: "Orbitron, sans-serif",
+              letterSpacing: "0.1em",
               fontWeight: 300,
-              lineHeight: '1.4', // Added line-height for more space between lines
+              lineHeight: "1.4", // Added line-height for more space between lines
             }}
           >
             A Mission &nbsp;
             <br />
-            Fueled by Bitcoin, <br className="sm:hidden" />Driven by Vision
+            Fueled by Bitcoin, <br className="sm:hidden" />
+            Driven by Vision
           </motion.h2>
 
           <motion.div
+            onClick={() => openSubscribe()}
             variants={itemVariants}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
@@ -98,6 +109,10 @@ function HeroSection() {
           </motion.div>
         </div>
       </motion.div>
+      <Subscribe
+        show={showSubscribe}
+        closeModal={() => setShowSubscribe(false)}
+      />
     </section>
   );
 }

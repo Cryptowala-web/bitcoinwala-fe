@@ -37,7 +37,7 @@ export default function Login() {
           }, 1000);
         } else {
           setTimeout(() => {
-            navigate("/dashboard");
+            navigate("/admin");
           }, 1000);
         }
         setFormData({

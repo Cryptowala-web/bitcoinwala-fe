@@ -13,7 +13,12 @@ import Register from "./pages/Register";
 import NotFoundPage from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UnauthorizedPage from "./pages/UnAuthorisedPage";
-
+import CryptoDashboard from "./components/Chart";
+import AnimatedStats from "./components/Stats";
+import BitcoinTimelineGraph from "./components/TimeLineGraph";
+import SubscribeForm from "./components/UserSubscribe";
+import BitcoinUnsubscribeCard from "./components/UnReSubscribe";
+import BtcDominanceChart from "./components/BitCoinDomininace";
 function App() {
   const location = useLocation();
   const { scrollYProgress } = useScroll();
@@ -125,6 +130,35 @@ function App() {
                 transition={pageTransition}
               >
                 <UnauthorizedPage />
+              </motion.div>
+            }
+          />
+
+          <Route
+            path="/subscribe"
+            element={
+              <motion.div
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageVariants}
+                transition={pageTransition}
+              >
+                <SubscribeForm />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/unsubscribe"
+            element={
+              <motion.div
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageVariants}
+                transition={pageTransition}
+              >
+                <BitcoinUnsubscribeCard />
               </motion.div>
             }
           />

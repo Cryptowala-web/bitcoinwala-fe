@@ -1,14 +1,17 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 // Import components
-import HeroSection from '../components/HeroSection.jsx';
-import MissionSection from '../components/MissionSection.jsx';
-import ComingSoonSection from '../components/ComingSoonSection.jsx';
-import Footer from '../components/Footer.jsx';
-import Bitcoin3DIframe from './Bitcoin3DIframe.js';
+import HeroSection from "../components/HeroSection.jsx";
+import MissionSection from "../components/MissionSection.jsx";
+import ComingSoonSection from "../components/ComingSoonSection.jsx";
+import Footer from "../components/Footer.jsx";
+import Bitcoin3DIframe from "./Bitcoin3DIframe.js";
+import BitcoinTimelineGraph from "../components/TimeLineGraph.jsx";
+import JelloText from "../components/jest.jsx";
+import HeroModal from "../components/HeroModal.jsx";
 
 function HomePage() {
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
@@ -19,12 +22,12 @@ function HomePage() {
       setWindowWidth(window.innerWidth);
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const isMobile = windowWidth < 768;
-  
+
   const sectionVariants = {
     initial: {
       opacity: 0,
@@ -43,6 +46,7 @@ function HomePage() {
   return (
     <div className="relative min-h-full bg-black text-white font-['Montserrat',_sans-serif] overflow-y-scroll h-screen hide-scrollbar">
       {/* Hero Section */}
+
       <motion.div
         variants={sectionVariants}
         initial="initial"
@@ -50,7 +54,16 @@ function HomePage() {
         viewport={{ once: true, amount: 0.2 }}
         transition={sectionTransition}
       >
-        <Bitcoin3DIframe />
+        <JelloText />
+      </motion.div>
+      <motion.div
+        variants={sectionVariants}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={sectionTransition}
+      >
+        <HeroModal />
       </motion.div>
       <motion.div
         variants={sectionVariants}
@@ -61,7 +74,16 @@ function HomePage() {
       >
         <HeroSection />
       </motion.div>
-      
+      <motion.div
+        variants={sectionVariants}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={sectionTransition}
+      >
+        <Bitcoin3DIframe />
+      </motion.div>
+
       {/* Mission Section */}
       <motion.div
         variants={sectionVariants}
@@ -73,6 +95,16 @@ function HomePage() {
         <MissionSection isMobile={isMobile} />
       </motion.div>
 
+      <motion.div
+        variants={sectionVariants}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={sectionTransition}
+      >
+        <BitcoinTimelineGraph />
+      </motion.div>
+
       {/* Coming Soon Section */}
       <motion.div
         variants={sectionVariants}
@@ -81,12 +113,12 @@ function HomePage() {
         viewport={{ once: true, amount: 0.2 }}
         transition={sectionTransition}
       >
-        <ComingSoonSection 
-          isSubscribeOpen={isSubscribeOpen} 
-          setIsSubscribeOpen={setIsSubscribeOpen} 
+        <ComingSoonSection
+          isSubscribeOpen={isSubscribeOpen}
+          setIsSubscribeOpen={setIsSubscribeOpen}
         />
       </motion.div>
-      
+
       {/* Footer */}
       <motion.div
         variants={sectionVariants}
