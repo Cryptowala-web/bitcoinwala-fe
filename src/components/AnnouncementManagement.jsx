@@ -21,6 +21,8 @@ export default function Announcements() {
   const [updateLoading, setUpdateLoading] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
 
+  const bitlogo  = "/biglog.png"
+
   useEffect(() => {
     const fetchAnnouncements = async () => {
       setLoading(true);

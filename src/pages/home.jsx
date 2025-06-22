@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
+
 // Import components
 import HeroSection from "../components/HeroSection.jsx";
 import MissionSection from "../components/MissionSection.jsx";
@@ -13,6 +14,8 @@ import BitcoinTimelineGraph from "../components/TimeLineGraph.jsx";
 import JelloText from "../components/jest.jsx";
 import HeroModal from "../components/HeroModal.jsx";
 import CardStack from "../components/CardStack.jsx";
+// import { API } from "../api";
+
 
 
 const staticData = [
@@ -44,7 +47,7 @@ const staticData = [
 function HomePage() {
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [announcementData, setAnnouncementData] = useState(staticData);
+  const [announcementData, setAnnouncementData] = useState([staticData]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,12 +58,12 @@ function HomePage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  //  useEffect(() => {
-  //   fetch("http://localhost:5040/announcement/")
-  //     .then((res) => res.json())
-  //     .then((data) => setAnnouncementData(staticData))
-  //     .catch((err) => console.error("Failed to fetch announcements:", err));
-  // }, []);
+   useEffect(() => {
+    fetch("http://localhost:5040/announcement/")
+      .then((res) => res.json())
+      .then((data) => setAnnouncementData(data))
+      .catch((err) => console.error("Failed to fetch announcements:", err));
+  }, []);
 
 
   const isMobile = windowWidth < 768;
