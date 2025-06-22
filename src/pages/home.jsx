@@ -13,7 +13,7 @@ import BitcoinTimelineGraph from "../components/TimeLineGraph.jsx";
 import JelloText from "../components/jest.jsx";
 import HeroModal from "../components/HeroModal.jsx";
 import CardStack from "../components/CardStack.jsx";
-// import { API } from "../api";
+import { API } from "../api";
 
 const staticData = [
   {
@@ -54,7 +54,7 @@ function HomePage() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5040/announcement/")
+    fetch(`${API}/announcement/`)
       .then((res) => res.json())
       .then((data) => setAnnouncementData(data))
       .catch((err) => console.error("Failed to fetch announcements:", err));
