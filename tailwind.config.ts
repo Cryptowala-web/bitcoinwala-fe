@@ -2,7 +2,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        unbounded: ['"Unbounded"', 'sans-serif'],
+        unbounded: ['"Unbounded"', "sans-serif"],
       },
     },
   },

@@ -3,7 +3,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-
 // Import components
 import HeroSection from "../components/HeroSection.jsx";
 import MissionSection from "../components/MissionSection.jsx";
@@ -16,33 +15,29 @@ import HeroModal from "../components/HeroModal.jsx";
 import CardStack from "../components/CardStack.jsx";
 // import { API } from "../api";
 
-
-
 const staticData = [
   {
-    title: 'Welcome to the Platform',
-    description: 'Explore new features and stay updated with announcements.',
-    image: 'https://picsum.photos/id/1011/400/250',
+    title: "Welcome to the Platform",
+    description: "Explore new features and stay updated with announcements.",
+    image: "https://picsum.photos/id/1011/400/250",
     expiry_date: new Date().toISOString(),
     click_count: 12,
   },
   {
-    title: 'System Maintenance',
-    description: 'Scheduled maintenance on June 25, 10:00 AM to 12:00 PM IST.',
-    image: 'https://picsum.photos/id/1012/400/250',
+    title: "System Maintenance",
+    description: "Scheduled maintenance on June 25, 10:00 AM to 12:00 PM IST.",
+    image: "https://picsum.photos/id/1012/400/250",
     expiry_date: new Date().toISOString(),
     click_count: 8,
   },
   {
-    title: 'Feature Release: Dashboard 2.0',
-    description: 'A brand-new dashboard experience is here with better UX.',
-    image: 'https://picsum.photos/id/1013/400/250',
+    title: "Feature Release: Dashboard 2.0",
+    description: "A brand-new dashboard experience is here with better UX.",
+    image: "https://picsum.photos/id/1013/400/250",
     expiry_date: new Date().toISOString(),
     click_count: 20,
   },
 ];
-
-
 
 function HomePage() {
   const [isSubscribeOpen, setIsSubscribeOpen] = useState(false);
@@ -58,13 +53,12 @@ function HomePage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     fetch("http://localhost:5040/announcement/")
       .then((res) => res.json())
       .then((data) => setAnnouncementData(data))
       .catch((err) => console.error("Failed to fetch announcements:", err));
   }, []);
-
 
   const isMobile = windowWidth < 768;
 
@@ -151,11 +145,9 @@ function HomePage() {
         whileInView="animate"
         viewport={{ once: true, amount: 0.2 }}
         transition={sectionTransition}
-       
       >
-        <CardStack  data={announcementData} />
+        <CardStack data={announcementData} />
       </motion.div>
-
       {/* Coming Soon Section */}
       <motion.div
         variants={sectionVariants}

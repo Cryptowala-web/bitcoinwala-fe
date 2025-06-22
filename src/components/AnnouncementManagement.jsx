@@ -127,7 +127,9 @@ export default function Announcements() {
   };
 
   const confirmDelete = async () => {
-    setDeleteLoading((prev) => ({ ...prev, [id]: true }));
+    if (!deletingItem) return;
+     const deletingId = deletingItem.id;
+    setDeleteLoading((prev) => ({ ...prev, [deletingId]: true }));
     if (!deletingItem) return;
     try {
       await fetch(`${API}/announcement/${deletingItem.id}`, {
@@ -143,7 +145,7 @@ export default function Announcements() {
       setAlertVisible(true);
     } finally {
       setDeletingItem(null);
-      setDeleteLoading((prev) => ({ ...prev, [id]: false }));
+     setDeleteLoading((prev) => ({ ...prev, [deletingId]: false }));
       setTimeout(() => setAlertVisible(false), 3000);
     }
   };

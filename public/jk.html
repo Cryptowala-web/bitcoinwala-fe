@@ -1,230 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitcoin 3D Scroll Animation</title>
-    <style>
-        /* @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap'); */
-    /* <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Orbitron:wght@300;400;500&display=swap" rel="stylesheet"> */
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Orbitron:wght@300;400;500&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Bitcoin 3D Scroll Animation</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Orbitron:wght@300;400;500&display=swap');
 
+    :root {
+      --padding: 10vmin;
+      --color-background: black;
+      --font-size-large: 8vw;
+      --font-size-medium: 4vw;
+      --font-size-normal: 2vw;
+    }
 
-        :root {
-            --padding: 10vmin;
-            --color-background: black;
-            --font-size-large: 8vw;
-            --font-size-medium: 4vw;
-            --font-size-normal: 2vw;
-        }
+    @media only screen and (min-width: 800px) {
+      :root {
+        --font-size-large: 64px;
+        --font-size-medium: 32px;
+        --font-size-normal: 16px;
+      }
+    }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-            }
+    @media only screen and (max-width: 500px) {
+      :root {
+        --font-size-large: 40px;
+        --font-size-medium: 20px;
+        --font-size-normal: 14px;
+      }
 
-        ::-webkit-scrollbar-track {
-        background: #000; /* Black track */
-        }
+      .section {
+        padding: 6vmin;
+        width: 90vw;
+      }
 
-        @media only screen and (min-width: 800px) {
-            :root {
-                --font-size-large: 64px;
-                --font-size-medium: 32px;
-                --font-size-normal: 16px;
-            }
-        }
+      .scroll-cta {
+        bottom: 5vmin;
+        font-size: var(--font-size-normal);
+        text-align: center;
+        left: 0;
+        right: 0;
+      }
 
-        @media only screen and (max-width: 500px) {
-            :root {
-                --font-size-large: 40px;
-                --font-size-medium: 20px;
-                --font-size-normal: 14px;
-            }
-        }
+      h1, h2 {
+        line-height: 1.2;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      p {
+        font-size: 1rem;
+      }
+    }
 
-         /* font-family: "Orbitron", sans-serif; */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        html, body {
-            min-height: 100%;
-            font-family: "Orbitron", sans-serif;
-            background-color: "#000000";
-            font-weight: 400;
-            font-size: var(--font-size-normal);
-            overflow-x: hidden;
-            letter-spacing: 0.2em;
-            /* overflow-y: hidden; */
-            /* overflow-y: scroll;      */
-        }
+    html, body {
+      min-height: 100%;
+      font-family: "Orbitron", sans-serif;
+      background-color: #000000;
+      font-weight: 400;
+      font-size: var(--font-size-normal);
+      overflow-x: hidden;
+      letter-spacing: 0.2em;
+    }
 
-        canvas {
-            position: fixed;
-            z-index: 2;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            visibility: hidden;
-            opacity: 0;
-        }
+    canvas {
+      position: fixed;
+      z-index: 2;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      visibility: hidden;
+      opacity: 0;
+    }
 
-        .content {
-            position: relative;
-            z-index: 1;
-        }
+    .content {
+      position: relative;
+      z-index: 1;
+    }
 
-        .section {
-            position: relative;
-            padding: var(--padding);
-            width: calc(100vw - calc(var(--padding) * 2));
-            height: calc(100vh - calc(var(--padding) * 2));
-            margin: 0 auto;
-            z-index: 2;
-        }
+    .section {
+      position: relative;
+      padding: var(--padding);
+      width: calc(100vw - 2 * var(--padding));
+      height: calc(100vh - 2 * var(--padding));
+      margin: 0 auto;
+      z-index: 2;
+    }
 
-        .section.dark {
-            color: white;
-            background-color: black;
-        }
+    .section.dark {
+      color: white;
+      background-color: black;
+    }
 
-        .section.right {
-            text-align: right;
-        }
+    .section.right {
+      text-align: right;
+    }
 
-        .blueprint {
-            position: relative;
-            background-color: #131C2A;
-            background-image: 
-                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
-                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
-            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-            background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
-            background-attachment: fixed;
-        }
+    .blueprint {
+      position: relative;
+      background-color: #131C2A;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+      background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+      background-attachment: fixed;
+    }
 
-        .blueprint svg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            stroke: white;
-            pointer-events: none;
-            visibility: hidden;
-        }
+    .blueprint svg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      stroke: white;
+      pointer-events: none;
+      visibility: hidden;
+    }
 
-        .blueprint .dark {
-            background-color: transparent;
-        }
+    .blueprint .dark {
+      background-color: transparent;
+    }
 
-        .ground-container {
-            position: relative;
-            overflow: hidden;
-        }
+    .ground-container {
+      position: relative;
+      overflow: hidden;
+    }
 
-        .parallax {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: -100px;
-            background-repeat: no-repeat;
-            background-position: top center;
-            background-size: cover;
-            transform-origin: top center;
-        }
+    .parallax {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: -100px;
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-size: cover;
+      transform-origin: top center;
+    }
 
-        .ground {
-            z-index: -1;
-            /* background-image: url("https://assets.codepen.io/557388/background-reduced.jpg"); */
-            background-image: url(bgs/background-reduced-black2.jpg);
-        }
+    .ground {
+      z-index: -1;
+      background-image: url(bgs/background-reduced-black2.jpg);
+    }
 
-        .clouds {
-            z-index: 2;
-            background-image: url(bgs/clouds3.png);
-        }
+    .clouds {
+      z-index: 2;
+      background-image: url(bgs/clouds3.png);
+    }
 
-        .sunset {
-            background: url(bgs/sunset-reduced1.jpg) no-repeat top center;
-            background-size: cover;
-            transform-origin: top center;
-        }
+    .sunset {
+      background: url(bgs/sunset-reduced1.jpg) no-repeat top center;
+      background-size: cover;
+      transform-origin: top center;
+    }
 
-        .scroll-cta, .credits {
-            position: absolute;
-            bottom: var(--padding);
-        }
+    .scroll-cta, .credits {
+      position: absolute;
+      bottom: var(--padding);
+    }
 
-        .scroll-cta {
-            font-size: var(--font-size-medium);
-            opacity: 0;
-        }
+    .scroll-cta {
+      font-size: var(--font-size-medium);
+      opacity: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
 
-        h1, h2 {
-            font-size: var(--font-size-large);
-            margin: 0vmin 0 2vmin 0;
-            font-weight: 500;
-            display: inline;
-        }
+    h1, h2 {
+      font-size: var(--font-size-large);
+      margin-bottom: 2vmin;
+      font-weight: 500;
+      display: block;
+    }
 
-        h3 {
-            font-size: var(--font-size-medium);
-            font-weight: 400;
-            margin: 0;
-        }
+    h3 {
+      font-size: var(--font-size-medium);
+      font-weight: 400;
+      margin: 0 0 1vmin 0;
+    }
 
-        .end h2 {
-            margin-bottom: 50vh;
-        }
+    .end h2 {
+      margin-bottom: 50vh;
+    }
 
-        .loading {
-            position: fixed;
-            width: 100vw;
-            height: 100vh;
-            top: 0;
-            left: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--font-size-medium);
-            z-index: 1000;
-        }
+    .loading {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-medium);
+      z-index: 1000;
+    }
 
-        a {
-            color: white;
-        }
+    a {
+      color: white;
+    }
 
-        ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
 
-        li {
-            margin-top: 10px;
-        }
+    li {
+      margin-top: 10px;
+    }
 
-        /* SVG Line animations using CSS instead of DrawSVG */
-        .animated-line {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-        }
+    .animated-line {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+    }
 
-        .animated-circle {
-            stroke-dasharray: 100;
-            stroke-dashoffset: 100;
-        }
-       
-    </style>
-    <meta name="description" content="Discover Bitcoinwala.ai - pioneering innovative solutions at the intersection of Bitcoin and visionary technology. Explore our mission and connect with the future of crypto.">
-    <meta name="keywords" content="Bitcoinwala, Bitcoin, cryptocurrency, crypto solutions, blockchain, innovation, Bitcoin technology">
+    .animated-circle {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+    }
+  </style>
 </head>
 <body>
  
@@ -390,10 +394,26 @@
                     var camera = view.camera;
                     camera.aspect = this.w / this.h;
                     let camZ = (screen.width - (this.w * 1)) / 3;
-                    camera.position.z = camZ < 180 ? 180 : camZ;
+                    camera.position.z = camZ < 180 ? 180 : 100;
                     camera.updateProjectionMatrix();
                 }
 
+                // for (var ii = 0; ii < this.views.length; ++ii) {
+                //     var view = this.views[ii];
+                //     var camera = view.camera;
+                //     camera.aspect = this.w / this.h;
+
+                //     // Responsive camera zoom
+                //     if (this.w < 600) {
+                //     camera.position.z = 260; // farther back for small screens
+                //     } else if (this.w < 900) {
+                //     camera.position.z = 200;
+                //     } else {
+                //     camera.position.z = 100;
+                //     }
+
+                //     camera.updateProjectionMatrix();
+                // }
                 this.renderer.setSize(this.w, this.h);
                 this.render();
             }
