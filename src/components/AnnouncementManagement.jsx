@@ -87,7 +87,8 @@ export default function Announcements() {
         setAlertMessage("Created successfully.");
         setAlertVisible(true);
       } catch (error) {
-        setAlertMessage(created.error || "Failed to update, try Again");
+        setAlertMessage("Failed to create, try Again");
+        console.log(error)
         setAlertVisible(true);
       } finally {
         setCreateLoading(false);
