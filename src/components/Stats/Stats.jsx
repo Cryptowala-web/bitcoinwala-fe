@@ -64,7 +64,7 @@ const Stats = () => {
   }, []);
 
   return (
-    <div className="min-h-[300px] flex flex-col items-center justify-center bg-black text-white py-10 px-4">
+    <div className="min-h-[300px] flex flex-col items-center justify-center bg-black text-white py-10 px-4" style={{ fontFamily: "'Orbitron', sans-serif" }} >
       <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center font-orbitron">
         Bitcoin Prices
       </h2>

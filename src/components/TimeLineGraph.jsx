@@ -153,7 +153,7 @@ const BitcoinTimelineGraph = () => {
   }, [hovered]);
 
   return (
-    <div className=" bg-black text-white overflow-hidden flex flex-col items-center justify-center px-4">
+    <div className="bg-black text-white overflow-hidden flex flex-col items-center justify-center px-4" style={{ fontFamily: "'Orbitron', sans-serif" }}>
       <h1 className="text-3xl sm:text-5xl font-bold mb-8 text-white text-center">
         Bitcoin Evolution Timeline
       </h1>
