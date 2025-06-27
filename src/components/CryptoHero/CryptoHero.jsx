@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './CryptoHero.module.css';
 
-const textLines = ["Bit coin", "to", "the moon"];
+const textLines = ["Bit coin", "to", "the"," moon"];
 
 const AnimatedSection = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.left}>
+      {/* <div className={styles.left}>
         {textLines.map((line, lineIndex) => (
           <div key={lineIndex} className={styles.line}>
             {line.split('').map((letter, letterIndex) => (
@@ -22,7 +22,7 @@ const AnimatedSection = () => {
             ))}
           </div>
         ))}
-      </div>
+      </div> */}
       <div className={styles.right}>
         <div className={styles.imageContainer}>
           <img src="/bitlogo.png" alt="Animated" className={`${styles.image} ${styles.firstImage}`} />

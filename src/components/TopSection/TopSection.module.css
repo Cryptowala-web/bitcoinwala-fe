@@ -84,7 +84,7 @@
 
 .letter {
   font-size: clamp(28px, 6vw, 80px);
-  font-weight: 700;
+  font-weight: 300;
   color: white;
   opacity: 0;
   transform: translateY(40px) scale(0.8);
@@ -95,11 +95,11 @@
   transform-origin: center bottom;
 }
 
-.letter:hover {
+/* .letter:hover {
   color: #facc15;
   transform: scale(1.2) translateY(-5px);
   text-shadow: 0 0 8px #facc15, 0 0 20px #f59e0b;
-}
+} */
 
 @keyframes dropIn {
   0% {

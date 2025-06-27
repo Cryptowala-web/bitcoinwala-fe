@@ -72,22 +72,21 @@ function HeroSection() {
         ></motion.div> */}
 
         <div className="text-center z-10 mt-130 px-4 w-full">
-          <motion.h2
+          <motion.h4
             variants={itemVariants}
             whileHover={{ scale: 1.02 }}
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-gray-100 mb-10 orbitron"
             style={{
               fontFamily: "Orbitron, sans-serif",
               letterSpacing: "0.1em",
-              fontWeight: 300,
-              lineHeight: "1.4", // Added line-height for more space between lines
+              lineHeight: "1.0", // Added line-height for more space between lines
             }}
           >
             A Mission &nbsp;
             <br />
             Fueled by Bitcoin, <br className="sm:hidden" />
             Driven by Vision
-          </motion.h2>
+          </motion.h4>
 
           <motion.div
             onClick={() => openSubscribe()}
