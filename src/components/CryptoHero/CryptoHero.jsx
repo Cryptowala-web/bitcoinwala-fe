@@ -26,7 +26,7 @@ const AnimatedSection = () => {
       <div className={styles.right}>
         <div className={styles.imageContainer}>
           <img src="/bitlogo.png" alt="Animated" className={`${styles.image} ${styles.firstImage}`} />
-          <img src="/bitlogo.png" alt="Animated" className={`${styles.image} ${styles.secondImage}`} />
+          <img src="/bitlogo-hover.png" alt="Animated" className={`${styles.image} ${styles.secondImage}`} />
         </div>
       </div>
     </div>

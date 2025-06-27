@@ -115,3 +115,25 @@
     transform: translateY(0px) scale(1);
   }
 }
+
+/* .letter:hover {
+  animation: flicker 1.5s;
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.letter {
+  display: inline-block;
+  opacity: 0.2; 
+  transition: opacity 0.3s ease-in-out;
+} */
