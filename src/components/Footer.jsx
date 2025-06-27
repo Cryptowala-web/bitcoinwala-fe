@@ -61,13 +61,13 @@ function Footer() {
       {/* Top Section */}
       <div className="max-w-5xl mx-auto flex flex-col items-center justify-center pt-16 pb-6 px-4">
         <div className="text-center">
-          <motion.p variants={textRevealVariant} className="text-sm text-gray-400">Contact   Uss</motion.p>
+          <motion.p variants={textRevealVariant} className="text-sm text-gray-400">Contact Us</motion.p>
           <motion.p
                       variants={slideUp} // Keeping existing slideUp for the email as it's more prominent
                       className="text-sm text-white mb-4"
                       whileHover={{ scale: 1.2 }}
           >
-          hello@bitcoinwala.ai
+          bitcoinwalaofficial@gmail.com
           </motion.p>
         </div>
       </div>

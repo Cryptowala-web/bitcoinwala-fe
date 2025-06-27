@@ -10,10 +10,12 @@ import ComingSoonSection from "../components/ComingSoonSection.jsx";
 import Footer from "../components/Footer.jsx";
 import Bitcoin3DIframe from "./Bitcoin3DIframe.js";
 import BitcoinTimelineGraph from "../components/TimeLineGraph.jsx";
-import JelloText from "../components/jest.jsx";
 import HeroModal from "../components/HeroModal.jsx";
 import CardStack from "../components/CardStack.jsx";
 import { API } from "../api";
+import { JellooText } from "../components/TopSection/TopSection.jsx";
+import Stats from "../components/Stats/Stats.jsx";
+import AnimatedSection from "../components/CryptoHero/CryptoHero.jsx";
 
 const staticData = [
   {
@@ -88,7 +90,7 @@ function HomePage() {
         viewport={{ once: true, amount: 0.2 }}
         transition={sectionTransition}
       >
-        <JelloText />
+        <JellooText />
       </motion.div>
       <motion.div
         variants={sectionVariants}
@@ -97,16 +99,7 @@ function HomePage() {
         viewport={{ once: true, amount: 0.2 }}
         transition={sectionTransition}
       >
-        <HeroModal />
-      </motion.div>
-      <motion.div
-        variants={sectionVariants}
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true, amount: 0.2 }}
-        transition={sectionTransition}
-      >
-        <HeroSection />
+        <AnimatedSection />
       </motion.div>
       <motion.div
         variants={sectionVariants}
@@ -129,6 +122,15 @@ function HomePage() {
         <MissionSection isMobile={isMobile} />
       </motion.div>
 
+      <motion.div
+        variants={sectionVariants}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={sectionTransition}
+      >
+        <Stats />
+      </motion.div>
       <motion.div
         variants={sectionVariants}
         initial="initial"

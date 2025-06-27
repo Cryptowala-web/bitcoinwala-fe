@@ -55,7 +55,7 @@ function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2 }}
-        className="absolute top-0 left-0 w-full h-full bg-transparent bg-opacity-40 z-5"
+        className="absolute top-0 left-0 w-full bg-transparent bg-opacity-40 z-5"
       ></motion.div>
 
       {/* Hero Panel */}
@@ -66,10 +66,10 @@ function HeroSection() {
         animate="visible"
         className="w-full h-full flex flex-col items-center justify-center relative z-10"
       >
-        <motion.div
+        {/* <motion.div
           variants={lineVariants}
           className="absolute top-12 h-0.5 bg-gray-400"
-        ></motion.div>
+        ></motion.div> */}
 
         <div className="text-center z-10 mt-130 px-4 w-full">
           <motion.h2
