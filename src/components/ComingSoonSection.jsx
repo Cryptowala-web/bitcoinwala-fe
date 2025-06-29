@@ -39,7 +39,7 @@ function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
       initial="hidden"
       animate="visible"
       variants={fadeIn}
-      className="py-20 md:py-32 px-4 sm:px-6 md:px-10 bg-black relative h-screen w-full">
+      className="py-20 md:py-32 px-4 sm:px-6 md:px-10 bg-black relative  w-full">
       <motion.div
         variants={slideUp}
         className="max-w-6xl mx-auto relative">

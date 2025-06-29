@@ -18,6 +18,7 @@ import Stats from "../components/Stats/Stats.jsx";
 import AnimatedSection from "../components/CryptoHero/CryptoHero.jsx";
 import { MaskContainer } from "../components/Title/Title.jsx";
 import { ThreeDCardDemo } from "../components/AnnouncementDisplay.jsx";
+import { SparklesPreview } from "../components/Sparkleee.jsx";
 
 const staticData = [
   {
@@ -159,7 +160,7 @@ function HomePage() {
         viewport={{ once: true, amount: 0.2 }}
         transition={sectionTransition}
       >
-        <CardStack data={announcementData}/>
+        <CardStack data={announcementData} />
         {/* <ThreeDCardDemo announcements={announcementData} /> */}
       </motion.div>
       {/* Coming Soon Section */}
@@ -176,6 +177,15 @@ function HomePage() {
         />
       </motion.div>
 
+      <motion.div
+        variants={sectionVariants}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={sectionTransition}
+      >
+        <SparklesPreview />
+      </motion.div>
       {/* Footer */}
       <motion.div
         variants={sectionVariants}
