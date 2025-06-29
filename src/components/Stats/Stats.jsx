@@ -7,12 +7,13 @@ import {
   useTransform,
   animate,
 } from "framer-motion";
-
+import { useContext } from "react";
+import { ContentContext } from "../../context/ContextProvider";
 const CountUp = ({ target, prefix = "", duration = 1.5 }) => {
   const count = useMotionValue(0);
   const [display, setDisplay] = useState(0);
   const [shouldAnimate, setShouldAnimate] = useState(false);
-
+ 
   useMotionValueEvent(count, "change", (latest) => {
     setDisplay(latest);
   });
@@ -47,6 +48,8 @@ const CountUp = ({ target, prefix = "", duration = 1.5 }) => {
 const Stats = () => {
   const [prices, setPrices] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const content = useContext(ContentContext);
+ 
 
   useEffect(() => {
     const fetchBitcoinPrices = async () => {
@@ -66,7 +69,7 @@ const Stats = () => {
   return (
     <div className="min-h-[300px] flex flex-col items-center justify-center bg-black text-white py-10 px-4" style={{ fontFamily: "'Orbitron', sans-serif" }} >
       <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center font-orbitron">
-        Bitcoin Prices
+        {content.prices || (<>Bitcoin Prices</>)}
       </h2>
 
       {!prices && (
@@ -115,24 +118,24 @@ const Stats = () => {
               </div>
               <AnimatePresence>
                 <motion.div
-  key={item.value}
-  initial={{ opacity: 0, y: 10 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true, amount: 0.5 }}
-  onViewportEnter={() => setIsVisible(true)}
-  exit={{ opacity: 0, y: -10 }}
-  className="text-2xl sm:text-3xl font-bold text-white"
->
-  {isVisible ? (
-    <CountUp
-      target={item.value}
-      prefix={item.symbol}
-      duration={2}
-    />
-  ) : (
-    <span>{item.symbol} 0</span>
-  )}
-</motion.div>
+                  key={item.value}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  onViewportEnter={() => setIsVisible(true)}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="text-2xl sm:text-3xl font-bold text-white"
+                >
+                  {isVisible ? (
+                    <CountUp
+                      target={item.value}
+                      prefix={item.symbol}
+                      duration={2}
+                    />
+                  ) : (
+                    <span>{item.symbol} 0</span>
+                  )}
+                </motion.div>
               </AnimatePresence>
             </motion.div>
           ))}

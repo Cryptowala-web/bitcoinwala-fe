@@ -1,7 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useContext } from "react";
+import { ContentContext } from "../context/ContextProvider";
 
 function Footer() {
+  const content = useContext(ContentContext);
   const logoAnimation = {
     hidden: { scale: 0.8, opacity: 0 },
     visible: {
@@ -61,13 +64,13 @@ function Footer() {
       {/* Top Section */}
       <div className="max-w-5xl mx-auto flex flex-col items-center justify-center pt-16 pb-6 px-4">
         <div className="text-center">
-          <motion.p variants={textRevealVariant} className="text-sm text-gray-400">Contact Us</motion.p>
+          <motion.p variants={textRevealVariant} className="text-sm text-gray-400">{content.footer[0] || 'Contact Us'}</motion.p>
           <motion.p
                       variants={slideUp} // Keeping existing slideUp for the email as it's more prominent
                       className="text-sm text-white mb-4"
                       whileHover={{ scale: 1.2 }}
           >
-          bitcoinwalaofficial@gmail.com
+          {content.footer[1] || 'bitcoinwalaofficial@gmail.com '}
           </motion.p>
         </div>
       </div>
@@ -75,7 +78,7 @@ function Footer() {
       {/* Bottom Border Line Section */}
       <div className="bg-black py-2 border-t border-gray-800">
         <motion.p variants={textRevealVariant} className="text-center text-sm text-gray-400">
-          © 2025. Bitcoinwala All Rights Reserved.
+         {content.copyrights[0] ||'© 2025. Bitcoinwala All Rights Reserved.'}
         </motion.p>
       </div>
     </footer>

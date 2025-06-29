@@ -2,9 +2,12 @@ import React from 'react';
 import { MapPin } from 'lucide-react';
 import Subscribe from './subscribe.jsx';
 import { motion } from 'framer-motion';
+import { useContext } from 'react';
+import { ContentContext } from '../context/ContextProvider.jsx';
 
 function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
   // Animation variants
+  const content = useContext(ContentContext);
   const fadeIn = {
     hidden: { opacity: 0 },
     visible: {
@@ -54,7 +57,7 @@ function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
             variants={slideUp}
             className="text-xl text-[#4c4747] tracking-wider text-center"
             style={{ letterSpacing: '0.1em' ,color:"white"}}>
-            Born Sovereign, Global by Force, Bitcoin by Choice
+            {content.coming[2] || 'Born Sovereign, Global by Force, Bitcoin by Choice'}
           </motion.p>
         </motion.div>
 
@@ -74,13 +77,13 @@ function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
                 letterSpacing: '0.1em',
                 fontWeight: 300
               }}>
-              Coming Soon..!
+              {content.coming[0] || 'Coming Soon..!'}
             </motion.h2>
 
             <motion.p
               variants={slideUp}
               className="text-base text-white mb-8 text-xl">
-              Join the New Standard
+               {content.coming[1] || 'Join the New Standard'}
             </motion.p>
 
             <motion.div

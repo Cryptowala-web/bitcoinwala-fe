@@ -3,11 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import './CardStack.css';
+import { useContext } from 'react';
+import { ContentContext } from '../context/ContextProvider';
 
 const CardStack = ({ data }) => {
   const [cards, setCards] = useState([]);
   const [animationClass, setAnimationClass] = useState('');
   const [modalData, setModalData] = useState(null);
+  const content = useContext(ContentContext);
   const bitlogo = "/biglog.png";
 
   useEffect(() => {
@@ -51,8 +54,8 @@ const CardStack = ({ data }) => {
   return (
     <div className="parent-container">
       <header className="hero">
-        <h1 className="h1-element">News Letter</h1>
-        <p className="h1-element">Announcements are good to go.</p>
+        <h1 className="h1-element">{content.news[0] || 'News Letter'}</h1>
+        <p className="h1-element">{content.news[0] || 'Announcements are good to go.'}</p>
       </header>
 
       <ul className={animationClass} onClick={handleCardClick}>

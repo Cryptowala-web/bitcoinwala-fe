@@ -4,6 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   <title>Bitcoin 3D Scroll Animation</title>
+  <script>
+    window.addEventListener("message", (e) => {
+      console.log("Received from parent:", e.data.parallax);
+      console.log(e.data.parallax[0][0])
+    
+    e.data.parallax.forEach((item, index) => {
+      const [title, content] = item;
+      const headingEl = document.getElementById(`heading-${index}`);
+      if (headingEl) {
+        headingEl.innerHTML = title;
+      }
+      const paraEl = document.getElementById(`para-${index}`);
+      if (paraEl) {
+        paraEl.innerHTML = content;
+      }
+    });
+  });
+  </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Orbitron:wght@300;400;500&display=swap');
 
@@ -317,32 +335,32 @@
     <div class="trigger"></div>
 
     <div class="section dark">
-      <h2 style="color: white;">The Future Doesn’t Wait. <br> Neither Do We.</h1>
-      <p style="color: white;">You’ve heard of Bitcoin.<br/>Now meet the ones who are <strong>Leading through it.</strong> <br/> <strong>Owning the next financial era.</strong></p>
+      <h2 style="color: white;" id="heading-0">The Future Doesn’t Wait. <br> Neither Do We.</h2>
+      <p style="color: white;" id="para-0">You’ve heard of Bitcoin.<br/>Now meet the ones who are <strong>Leading through it.</strong> <br/> <strong>Owning the next financial era.</strong></p>
       <div class="scroll-cta">Scroll</div>
     </div>
 
     <div class="section right dark">
-      <h2 style="color: white;">It’s not “crypto.”</h2>
-      <p style="color: white;"><strong>It’s monetary firepower.</strong></p>
+      <h2 style="color: white;" id="heading-1">It’s not “crypto.”</h2>
+      <p style="color: white;" id="para-1"><strong>It’s monetary firepower.</strong></p>
     </div>
 
     <div class="ground-container">
       <div class="parallax ground"></div>
 
       <div class="section right dark">
-        <h2><strong>Bitcoin is not an experiment.</strong></h2>
-        <p>It’s a weapon against inflation.<br/>A borderless, bankless standard of value.</p>
+        <h2 id="heading-3"><strong>Bitcoin is not an experiment.</strong></h2>
+        <p id="para-3">It’s a weapon against inflation.<br/>A borderless, bankless standard of value.</p>
       </div>
 
       <div class="section">
-        <h2 style="color: white;">21 million.</h2>
-        <p style="color: white;">No QE. No bailouts. No games.</p>
+        <h2 id="heading-4" style="color: white;">21 million.</h2>
+        <p id="para-4" style="color: white;">No QE. No bailouts. No games.</p>
       </div>
 
       <div class="section right">
-        <h2 style="color: white;">India Needs a Leader in This Space.</h2>
-        <p style="color: white;">Now it has one.</p>
+        <h2 id="heading-5" style="color: white;">India Needs a Leader in This Space.</h2>
+        <p id="para-5" style="color: white;">Now it has one.</p>
       </div>
 
       <div class="parallax clouds"></div>
@@ -356,50 +374,50 @@
       </svg>
 
       <div class="section dark">
-        <h2>We are <strong>Bitcoinwala.</strong></h2>
-        <p>A bold treasury house.<br/>An asset management company that doesn’t follow trends — <strong>we set them.</strong> </p>
+        <h2 id="heading-6">We are <strong>Bitcoinwala.</strong></h2>
+        <p id="para-6">A bold treasury house.<br/>An asset management company that doesn’t follow trends — <strong>we set them.</strong> </p>
       </div>
 
       <div class="section dark length">
-        <h2>We Don’t Manage Coins.</h2>
-        <p><strong>We engineer legacies.</strong></p>
-        <p>For family offices.<br/>For institutions.<br/>For builders and believers who see the world changing — and move before it does.</p>
+        <h2 id="heading-7">We Don’t Manage Coins.</h2>
+        <p id="para-6"><strong>We engineer legacies.</strong>
+        For family offices.<br/>For institutions.<br/>For builders and believers who see the world changing — and move before it does.</p>
       </div>
 
       <div class="section dark wingspan">
-        <h2>Real Value. </h2>
-        <p>Real Scarcity. <br/> <strong>Radical Transparency.</strong></p>
+        <h2 id="heading-8">Real Value. </h2>
+        <p id="para-8">Real Scarcity. <br/> <strong>Radical Transparency.</strong></p>
         <p>We hold Bitcoin because <strong>it’s truth in code.</strong> <br/>And we manage it like <strong>dynastic wealth —</strong> <br/>Secure. Strategic. Sovereign.</p>
       </div>
 
       <div class="section dark phalange">
-        <h2>Global Standards. </h2>
-        <p>Born in India. <br /> We’re not a startup.<br/>We’re <strong>India’s answer to sovereign-grade crypto capital.</strong> </p>
+        <h2 id="heading-9">Global Standards. </h2>
+        <p id="para-9">Born in India. <br /> We’re not a startup.<br/>We’re <strong>India’s answer to sovereign-grade crypto capital.</strong> </p>
       </div>
 
       <div class="section dark">
-        <h2>Bitcoinwala is not just a brand.</h2>
-        <p>It’s a  <strong>financial fortress.</strong> <br/>A symbol of <strong>what comes next.</strong></p>
+        <h2 id="heading-10">Bitcoinwala is not just a brand.</h2>
+        <p id="para-10">It’s a  <strong>financial fortress.</strong> <br/>A symbol of <strong>what comes next.</strong></p>
       </div>
 
       <div class="section dark">
-        <h2>The End of Fiat Thinking.</h2>
-        <p>The Rise of <strong>Bitcoin Powerhouses.</strong></p>
+        <h2 id="heading-11">The End of Fiat Thinking.</h2>
+        <p id="para-11">The Rise of <strong>Bitcoin Powerhouses.</strong></p>
       </div>
 
       <div class="section dark">
-        <h2>If you’re still asking why Bitcoin</h2>
-        <p>You’re already late.</p>
-        <h2>If you're asking who to trust with it</h2>
-        <p><strong>You're right on time.</strong></p>
+        <h2 id="'heading-12"> If you’re still asking why Bitcoin</h2>
+        <p id="para-12">You’re already late.</p>
+        <h2 id="heading-13">If you're asking who to trust with it</h2>
+        <p id="para-13"><strong>You're right on time.</strong></p>
       </div>
     </div>
 
     <div class="sunset">
       <div class="section"></div>
       <div class="section end">
-        <h2 style="color: white;">We Are Bitcoinwala.</h2>
-        <p style="color: white;">Your Wealth. Upgraded. Future-Proofed.<br/>On-Chain.</p>
+        <h2 id="heading-14" style="color: white;">We Are Bitcoinwala.</h2>
+        <p id="para-14" style="color: white;">Your Wealth. Upgraded. Future-Proofed.<br/>On-Chain.</p>
       </div>
     </div>
   </div>
@@ -415,6 +433,7 @@
 
     <script>
         console.clear();
+        
 
         class Scene {
             constructor(model) {
@@ -504,7 +523,19 @@
                     var camera = view.camera;
                     camera.aspect = this.w / this.h;
                     let camZ = (screen.width - (this.w * 1)) / 3;
-                    camera.position.z = camZ < 180 ? 180 : 100;
+                    // camera.position.z = camZ < 180 ? 180 : 100;
+                    if (this.w < 500) {
+                      camera.position.z = 350;
+                      // this.modelGroup.scale.set(0.5, 0.5, 0.5);
+                    } else if (this.w < 900) {
+                      camera.position.z = 200;
+                      // this.modelGroup.scale.set(0.7, 0.7, 0.7);
+                    } else {
+                      camera.position.z = 100;
+                      // this.modelGroup.scale.set(1, 1, 1);
+                    }
+                    // camera.aspect = this.w / this.h;
+
                     camera.updateProjectionMatrix();
                 }
 
@@ -612,6 +643,7 @@
 
             gsap.set(plane.rotation, {y: tau * -.25});
             gsap.set(plane.position, {x: 80, y: -32, z: -60});
+            
             
             scene.render();
             

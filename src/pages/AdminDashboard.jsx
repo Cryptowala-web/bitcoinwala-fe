@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import SubscriberList from "../components/subscriberList";
 import SuperAdminEmail from "../components/SuperAdminEmail";
 import WhitepaperCMSModal from "../components/WhitePaperCMSModal";
+import ContentManagement from "../components/ContentManagement/ContentManagement";
 
 const ActionButton = ({ onClick, label, loading, bgColor }) => (
   <motion.button
@@ -220,6 +221,7 @@ export default function AdminManagement() {
 
         <WhitepaperCMSModal isOpen={open} onClose={() => setOpen(false)} />
       </div>
+      <ContentManagement/>
       {userRole === "super_admin" && <SuperAdminEmail />}
       <Footer />
     </div>

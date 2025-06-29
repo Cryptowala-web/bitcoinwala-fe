@@ -33,18 +33,14 @@
 
 // export default JellooText;
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./TopSection.module.css";
 import {
   motion,
-  useMotionValue,
-  useMotionValueEvent,
-  useTransform,
-  animate,
 } from "framer-motion";
 import Subscribe from "../subscribe";
 
-const lines = ["A mission", "Fueled by Bitcoin", "Driven by Vision"];
+const lines = ["A Mission", "Fueled by Bitcoin", "Driven by Vision"];
 
 export const JellooText = () => {
   const itemVariants = {

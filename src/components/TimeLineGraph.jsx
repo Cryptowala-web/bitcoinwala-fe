@@ -7,6 +7,8 @@ import {
   Zap,
   DollarSign,
 } from "lucide-react";
+import { useContext } from "react";
+import { ContentContext } from "../context/ContextProvider";
 
 const timelineData = [
   {
@@ -126,6 +128,7 @@ const timelineData = [
 const BitcoinTimelineGraph = () => {
   const [hovered, setHovered] = useState(null);
   const trackRef = useRef(null);
+  const content = useContext(ContentContext);
 
   // Animate the carousel scrolling
   useEffect(() => {
@@ -155,7 +158,7 @@ const BitcoinTimelineGraph = () => {
   return (
     <div className="bg-black text-white overflow-hidden flex flex-col items-center justify-center px-4" style={{ fontFamily: "'Orbitron', sans-serif" }}>
       <h1 className="text-3xl sm:text-5xl font-bold mb-8 text-white text-center">
-        Bitcoin Evolution Timeline
+        {content.timeline || 'Bitcoin Evolution Timeline'}
       </h1>
 
       <div ref={trackRef} className="relative w-full max-w-7xl overflow-hidden">
