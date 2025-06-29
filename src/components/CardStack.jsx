@@ -5,6 +5,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import './CardStack.css';
 import { useContext } from 'react';
 import { ContentContext } from '../context/ContextProvider';
+import { ThreeDCardDemo } from './AnnouncementDisplay';
 
 const CardStack = ({ data }) => {
   const [cards, setCards] = useState([]);
@@ -55,10 +56,12 @@ const CardStack = ({ data }) => {
     <div className="parent-container">
       <header className="hero">
         <h1 className="h1-element">{content.news[0] || 'News Letter'}</h1>
-        <p className="h1-element">{content.news[0] || 'Announcements are good to go.'}</p>
+        <p className="h1-element">{content.news[1] || 'Announcements are good to go.'}</p>
       </header>
 
-      <ul className={animationClass} onClick={handleCardClick}>
+      <ThreeDCardDemo announcements={data}/>
+
+      {/* <ul className={animationClass} onClick={handleCardClick}>
         {cards.map((card, index) => (
           <li className={`card card-${index + 1}`} key={index}>
             <img src={card.image} alt={card.title} />
@@ -103,7 +106,7 @@ const CardStack = ({ data }) => {
             </span>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
