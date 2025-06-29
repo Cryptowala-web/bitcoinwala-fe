@@ -3,7 +3,26 @@ import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import AnimatedWhitepaperModal from "./pdf";
 import Subscribe from "./subscribe";
+import whitepaperJSON from "./whitepaper.json";
+import { Timeline } from "./ManifestoTimeLine";
 
+export function transformWhitePaperData(whitePaperJson) {
+   return whitePaperJson.sections.map((section) => ({
+    title: section.heading,
+    content: (
+      <div className="space-y-2">
+        {section.content.map((line, i) => (
+          <p
+            key={i}
+            className="text-neutral-700 dark:text-neutral-300 text-sm md:text-base"
+          >
+            {line}
+          </p>
+        ))}
+      </div>
+    )
+  }));
+}
 function MissionSection({ isMobile }) {
   const [isSticky, setIsSticky] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,6 +47,23 @@ function MissionSection({ isMobile }) {
     };
   }, []);
 
+  const [data, setData] = useState(whitepaperJSON);
+  console.log("data12345", data);
+
+  const fetchWhitepaper = async () => {
+    const res = await fetch(`${API}/admin/api/whitepaper`);
+    const data = await res.json();
+    console.log("data", data);
+    setData(data);
+  };
+
+  useEffect(() => {
+    try {
+      fetchWhitepaper();
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
   const fadeIn = {
     hidden: { opacity: 0 },
     visible: {
@@ -88,6 +124,9 @@ function MissionSection({ isMobile }) {
     },
   };
 
+  const timelineData = transformWhitePaperData(data);
+  console.log("tieline", timelineData)
+
   return (
     <motion.section
       ref={sectionRef}
@@ -118,7 +157,6 @@ function MissionSection({ isMobile }) {
         />
       </motion.div>
       <div ref={anchorRef} className="w-full h-1"></div>
-
       {/* Main Content */}
       <motion.div
         variants={staggerContainer}
@@ -268,12 +306,12 @@ function MissionSection({ isMobile }) {
           <motion.div className="flex items-end justify-center md:justify-end px-4 md:px-0 mt-10 space-x-4">
             <div className="text-left">
               <motion.h3 className="flex text-lg sm:text-xl text-white mb-4 tracking-widest justify-center md:justify-start">
-                  <motion.img
-                    src="/line.svg"
-                    className="mr-2 w-4 h-4 sm:w-auto sm:h-auto"
-                    alt="line"
-                  />
-                  Connect
+                <motion.img
+                  src="/line.svg"
+                  className="mr-2 w-4 h-4 sm:w-auto sm:h-auto"
+                  alt="line"
+                />
+                Connect
               </motion.h3>
 
               <motion.div
@@ -322,9 +360,8 @@ function MissionSection({ isMobile }) {
           </motion.div>
         </motion.div>
       </motion.div>
-
       {/* Bottom Arrow */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.5 }}
@@ -336,10 +373,10 @@ function MissionSection({ isMobile }) {
         >
           <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500" />
         </motion.div>
-      </motion.div>
+      </motion.div> */}
+      {/* <Timeline data={timelineData} />; */}
+      {!isMobile && <Timeline data={timelineData} />}
     </motion.section>
-
-
   );
 }
 
