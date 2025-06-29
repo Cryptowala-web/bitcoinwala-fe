@@ -16,6 +16,7 @@ import { API } from "../api";
 import { JellooText } from "../components/TopSection/TopSection.jsx";
 import Stats from "../components/Stats/Stats.jsx";
 import AnimatedSection from "../components/CryptoHero/CryptoHero.jsx";
+import { MaskContainer } from "../components/Title/Title.jsx";
 
 const staticData = [
   {
@@ -83,6 +84,66 @@ function HomePage() {
     <div className="relative min-h-full bg-black text-white font-['Montserrat',_sans-serif] overflow-y-scroll h-screen hide-scrollbar">
       {/* Hero Section */}
 
+      <motion.div
+        variants={sectionVariants}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={sectionTransition}
+      >
+        {/* <MaskContainer
+          size={40}
+          revealSize={500}
+          className="h-[600px] w-full flex items-center justify-center bg-white text-black dark:bg-black dark:text-white"
+          revealText={
+            <div
+              className="
+        flex 
+        flex-col 
+        items-center 
+        justify-center 
+        text-3xl
+        sm:text-4xl
+        md:text-5xl
+        lg:text-6xl
+        xl:text-7xl
+        gap-6
+        text-black 
+        dark:text-white
+        max-w-[90%]
+        mx-auto
+      "
+              style={{ fontFamily: "'Orbitron', sans-serif" }}
+            >
+              <span>A Mission</span>
+              <span>Fueled by Bitcoin</span>
+              <span>Driven by Vision</span>
+            </div>
+          }
+        >
+          <div
+            className="
+      flex 
+      flex-col 
+      items-center 
+      justify-center 
+      sm:text-5xl
+      md:text-6xl
+      lg:text-7xl
+      xl:text-8xl
+      text-[#fc5603]
+      font-bold
+      text-center
+      max-w-[90%]
+      mx-auto
+    "
+            style={{ fontFamily: "'Orbitron', sans-serif" }}
+          >
+            <span>A Mission Fueled by Bitcoin</span>
+            <span>Driven by Vision</span>
+          </div>
+        </MaskContainer> */}
+      </motion.div>
       <motion.div
         variants={sectionVariants}
         initial="initial"
