@@ -540,8 +540,8 @@ const initialData = {
   copyrights: ["© 2025. Bitcoinwala All Rights Reserved."],
 };
 
-const ContentManagement = () => {
-  const [showModal, setShowModal] = useState(false);
+const ContentManagement = ({isOpen, close}) => {
+//   const [showModal, setShowModal] = useState(isOpen);
   const [data, setData] = useState([]);
   const [openSection, setOpenSection] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -586,7 +586,8 @@ const ContentManagement = () => {
       const json = await response.json();
       console.log(json);
       alert("Data saved!");
-      setShowModal(false);
+    //   setShowModal(false);
+      close();
     } catch (e) {
       console.error(e);
       alert("Failed to save.");
@@ -596,18 +597,18 @@ const ContentManagement = () => {
   return (
     <>
       {/* Floating Edit Button */}
-      <button
+      {/* <button
         onClick={() => setShowModal(true)}
-        className="fixed bottom-6 right-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full shadow-lg hover:scale-105 transition"
+        className="fixed bottom-10 right-6 bg-white/10 text-white px-4 py-2 rounded-full shadow-lg hover:scale-105 transition"
       >
         Edit Content
-      </button>
+      </button> */}
 
-      {showModal && (
+      {isOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-white/10 backdrop-blur-xl p-8 rounded-xl text-white relative">
             <button
-              onClick={() => setShowModal(false)}
+              onClick={close}
               className="absolute top-4 right-4 text-white text-2xl hover:text-red-400"
             >
               &times;

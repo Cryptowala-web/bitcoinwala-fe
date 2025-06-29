@@ -39,6 +39,7 @@ export default function AdminManagement() {
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [open, setOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false)
   const user = localStorage.getItem("user");
   const parsedUser = JSON.parse(user);
   const userRole = parsedUser.role;
@@ -211,6 +212,7 @@ export default function AdminManagement() {
       )}
       <Announcements />
       <SubscriberList />
+      <div className="flex gap-6 justify-center mt-10 bg-black py-10">
       <div className="mt-10 flex items-center justify-center bg-black text-white">
         <button
           onClick={() => setOpen(true)}
@@ -221,7 +223,18 @@ export default function AdminManagement() {
 
         <WhitepaperCMSModal isOpen={open} onClose={() => setOpen(false)} />
       </div>
-      <ContentManagement/>
+      <div className="mt-10 flex items-center justify-center bg-black text-white">
+        <button
+          onClick={() => setIsEditOpen(true)}
+          className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 rounded-lg text-white font-semibold"
+        >
+          Edit UI Content
+        </button>
+
+        <ContentManagement isOpen={isEditOpen} close={() => setIsEditOpen(false)} />
+      </div>
+      </div>
+      {/* <ContentManagement/> */}
       {userRole === "super_admin" && <SuperAdminEmail />}
       <Footer />
     </div>
