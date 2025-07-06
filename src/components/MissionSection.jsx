@@ -1,61 +1,69 @@
-import React from "react";
+import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
+import AnimatedWhitepaperModal from "./pdf";
+import Subscribe from "./subscribe";
+import whitepaperJSON from "./whitepaper.json";
+import { Timeline } from "./ManifestoTimeLine";
 
+export function transformWhitePaperData(whitePaperJson) {
+   return whitePaperJson.sections.map((section) => ({
+    title: section.heading,
+    content: (
+      <div className="space-y-2">
+        {section.content.map((line, i) => (
+          <p
+            key={i}
+            className="text-neutral-700 dark:text-neutral-300 text-sm md:text-base"
+          >
+            {line}
+          </p>
+        ))}
+      </div>
+    )
+  }));
+}
 function MissionSection({ isMobile }) {
-  // State to track logo position
-  const [isSticky, setIsSticky] = React.useState(false);
-  const logoRef = React.useRef(null);
-  const sectionRef = React.useRef(null);
-  const anchorRef = React.useRef(null);
+  const [isSticky, setIsSticky] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const logoRef = useRef(null);
+  const sectionRef = useRef(null);
+  const anchorRef = useRef(null);
 
-  // Effect to handle sticky behavior
-  React.useEffect(() => {
+  useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         const isAbove = entry.boundingClientRect.top < 0;
-        const isVisible = entry.isIntersecting;
-  
-        setIsSticky(!isVisible && isAbove);
+        setIsSticky(!entry.isIntersecting && isAbove);
       },
-      {
-        threshold: 0,
-      }
+      { threshold: 0 }
     );
-  
-    if (anchorRef.current) {
-      observer.observe(anchorRef.current);
-    }
-  
+
+    if (anchorRef.current) observer.observe(anchorRef.current);
+
     return () => {
-      if (anchorRef.current) {
-        observer.unobserve(anchorRef.current);
-      }
+      if (anchorRef.current) observer.unobserve(anchorRef.current);
     };
   }, []);
-  
-  
-  
 
-  // Function to handle file download
-  const handleDownload = () => {
-    // Create a temporary link element
-    const link = document.createElement("a");
+  const [data, setData] = useState(whitepaperJSON);
+  console.log("data12345", data);
 
-    // Set the file path - you can change this to your actual file path
-    link.href = "/BitcoinWala WHITE PAPER.docx";
-
-    // Set the download attribute with desired filename
-    link.download = "BitcoinWala WHITE PAPER.docx"; // You can change the filename here
-
-    // Append to body, click, and remove
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const fetchWhitepaper = async () => {
+    const res = await fetch(`${API}/admin/api/whitepaper`);
+    const data = await res.json();
+    console.log("data", data);
+    setData(data);
   };
 
-  // Animation variants
+  useEffect(() => {
+    try {
+      fetchWhitepaper();
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
   const fadeIn = {
     hidden: { opacity: 0 },
     visible: {
@@ -107,26 +115,17 @@ function MissionSection({ isMobile }) {
     },
   };
 
-  const pulseAnimation = {
-    initial: { scale: 1 },
-    animate: {
-      scale: [1, 1.05, 1],
-      transition: {
-        duration: 2,
-        repeat: Infinity,
-        repeatType: "reverse",
-      },
-    },
-  };
-
   const imageScaleVariant = {
     hidden: { scale: 0.9, opacity: 0 },
     visible: {
       scale: 1,
       opacity: 1,
-      transition: { duration: 0.8, ease: "easeOut", delay: 0.3 }
-    }
+      transition: { duration: 0.8, ease: "easeOut", delay: 0.3 },
+    },
   };
+
+  const timelineData = transformWhitePaperData(data);
+  console.log("tieline", timelineData)
 
   return (
     <motion.section
@@ -142,121 +141,119 @@ function MissionSection({ isMobile }) {
         backgroundSize: "20px 20px",
       }}
     >
-      {/* Logo */}
+      {/* Sticky Logo */}
       <motion.div
-  ref={logoRef}
-  variants={logoAnimation}
-  whileHover="hover"
-  className={`${isSticky ? 'fixed top-0' : 'absolute top-8 sm:top-2'} left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300`}
->
-  <img
-    src="/logo.svg"
-    alt="Bitcoinwala logo"
-    className="w-auto h-18 sm:h-26"
-  />
-</motion.div>
-
-{/* Anchor div goes just below */}
-<div ref={anchorRef} className="w-full h-1"></div>
-
-
+        ref={logoRef}
+        variants={logoAnimation}
+        whileHover="hover"
+        className={`${
+          isSticky ? "fixed top-0" : "absolute top-8 sm:top-2"
+        } left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300`}
+      >
+        <img
+          src="/logo.svg"
+          alt="Bitcoinwala logo"
+          className="w-auto h-18 sm:h-26"
+        />
+      </motion.div>
+      <div ref={anchorRef} className="w-full h-1"></div>
+      {/* Main Content */}
       <motion.div
         variants={staggerContainer}
         className="max-w-7xl w-full relative h-full flex flex-col justify-center py-10 sm:py-0"
       >
-        {/* Main Content Area */}
         <motion.div
           variants={slideUp}
-          className={`flex ${isMobile
-            ? "flex-col items-center space-y-12"
-            : "items-start space-x-4"
-            } mt-8 sm:mt-12 md:mt-20 px-2 sm:px-4`}
+          className={`flex ${
+            isMobile
+              ? "flex-col items-center space-y-12"
+              : "items-start space-x-4"
+          } mt-8 sm:mt-12 md:mt-20 px-2 sm:px-4`}
         >
-          {/* Mission Text */}
+          {/* Mission Image Block */}
           <motion.div
             variants={slideUp}
-            className={`${isMobile ? "mt-20 w-full flex flex-col items-center" : ""}`}
+            className={
+              isMobile ? "mt-20 w-full flex flex-col items-center" : ""
+            }
           >
-            {/* Mission Text Image */}
             <motion.div
               variants={imageScaleVariant}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className={`relative group overflow-hidden ${isMobile
-                ? "w-full max-w-sm"
-                : "w-full max-w-[24rem] xs:max-w-[30rem] sm:max-w-[42rem] md:max-w-[48rem] lg:w-[52rem] xl:w-[56rem]"
-                } h-auto`}
+              className={`relative group overflow-hidden ${
+                isMobile ? "w-full max-w-sm" : "w-full max-w-[56rem]"
+              } h-auto`}
               whileHover="hover"
             >
-              {/* Default image */}
               <motion.img
                 src="missiontext.png"
-                alt="Bitcoinwala mission statement graphic"
+                alt="Mission"
                 className="w-full"
                 initial={{ y: 0, opacity: 1 }}
                 variants={{
                   initial: { y: 0, opacity: 1 },
-                  hover: { y: "-50%", opacity: 0 }
+                  hover: { y: "-50%", opacity: 0 },
                 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
               />
-
-              {/* Hover image */}
               <motion.img
                 src="missiontext-hover.png"
-                alt="Bitcoinwala mission statement graphic - hover state"
+                alt="Mission Hover"
                 className="absolute top-0 left-0 w-full"
                 initial={{ y: "50%", opacity: 0 }}
                 variants={{
                   initial: { y: "50%", opacity: 0 },
-                  hover: { y: 0, opacity: 1 }
+                  hover: { y: 0, opacity: 1 },
                 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
               />
             </motion.div>
           </motion.div>
 
-          {/* Bitcoin Logo for Desktop */}
+          {/* Desktop Logo */}
           {!isMobile && (
-            <motion.div variants={slideUp} className="flex-shrink-0">
+            <motion.div variants={slideUp} className="flex-shrink-0 ml-80">
               <motion.div
                 whileHover={{
                   rotate: [0, -5, 5, -5, 0],
                   transition: { duration: 1 },
                 }}
-                className="relative group w-30 h-30 ml-80"
+                className="relative group w-30 h-30"
               >
                 <motion.img
                   src="bitlogo.png"
-                  alt="Logo default"
-                  className="absolute w-30 h-auto transition-opacity duration-600 opacity-100 group-hover:opacity-0"
+                  alt="bitlogo"
+                  className="absolute w-30 h-auto opacity-100 group-hover:opacity-0"
                 />
                 <motion.img
                   src="bitlogo-hover.png"
-                  alt="Logo hover"
-                  className="absolute w-30 h-auto transition-opacity duration-600 opacity-0 group-hover:opacity-100"
+                  alt="bitlogo-hover"
+                  className="absolute w-30 h-auto opacity-0 group-hover:opacity-100"
                 />
               </motion.div>
             </motion.div>
           )}
         </motion.div>
 
-        {/* Access button and manifest  */}
+        {/* Manifest + Button */}
         <motion.div
           variants={slideUp}
-          className={`${isMobile
-            ? "flex flex-col items-center mt-16 space-y-6"
-            : "ml-8 mt-20 md:mt-24  lg:mt-32"
-            }`}
+          className={`${
+            isMobile
+              ? "flex flex-col items-center mt-16 space-y-6"
+              : "ml-8 mt-32"
+          }`}
         >
           <motion.img
             transition={{ type: "spring", stiffness: 300, damping: 15 }}
             src="manifest.png"
             alt="bitcoinwala"
-            className={`${isMobile ? "max-w-[200px] sm:max-w-[250px]" : "max-w-xs"
-              } h-auto cursor-pointer`}
+            className={`${
+              isMobile ? "max-w-[200px] sm:max-w-[250px]" : "max-w-xs"
+            } h-auto cursor-pointer`}
           />
           <motion.button
-            onClick={handleDownload}
+            onClick={() => setIsModalOpen(true)}
             className="group relative mt-4"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -264,30 +261,36 @@ function MissionSection({ isMobile }) {
             <motion.img
               src="accessnow.png"
               alt="access now"
-              className={`transition-opacity duration-300 opacity-100 ${isMobile ? "max-w-[180px] sm:max-w-[200px]" : "max-w-56"
-                } h-auto cursor-pointer hover:opacity-80 `}
-
+              className={`${
+                isMobile ? "max-w-[180px] sm:max-w-[200px]" : "max-w-56"
+              } h-auto cursor-pointer hover:opacity-80 transition-opacity duration-300`}
             />
           </motion.button>
         </motion.div>
 
-        {/* Bitcoin Logo for Mobile  */}
+        {/* Modal Viewer */}
+        <AnimatedWhitepaperModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+
+        {/* Mobile Logo */}
         {isMobile && (
           <motion.div variants={slideUp} className="flex justify-center mt-12">
             <motion.div
               whileHover={{ rotate: 360 }}
               transition={{ duration: 1, ease: "easeInOut" }}
-              className="relative group w-20 h-20 bg-transparent rounded-full flex items-center justify-center border border-gray-700"
+              className="relative group w-20 h-20 rounded-full flex items-center justify-center border border-gray-700"
             >
               <motion.img
                 src="bitlogo.png"
-                alt="Logo default"
-                className="absolute w-full h-full transition-opacity duration-300 opacity-100 group-hover:opacity-0"
+                alt="Logo"
+                className="absolute w-full h-full opacity-100 group-hover:opacity-0"
               />
               <motion.img
                 src="bitlogo-hover.png"
-                alt="Logo hover"
-                className="absolute w-full h-full transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                alt="Logo Hover"
+                className="absolute w-full h-full opacity-0 group-hover:opacity-100"
               />
             </motion.div>
           </motion.div>
@@ -296,123 +299,69 @@ function MissionSection({ isMobile }) {
         {/* Connect Section */}
         <motion.div
           variants={slideUp}
-          className={` ${isMobile ? "mt-16 mb-8" : "absolute bottom-1 left-250"
-            }`}
+          className={`${
+            isMobile ? "mt-16 mb-8" : "absolute bottom-1 left-250"
+          }`}
         >
-          <motion.div className="flex items-end space-x-4 justify-center md:justify-end px-4 md:px-0 mt-10">
-            <div className="text-left md:text-left">
-              <motion.h3
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-                className="flex text-lg sm:text-xl text-white mb-4 tracking-widest justify-center md:justify-start"
-              >
+          <motion.div className="flex items-end justify-center md:justify-end px-4 md:px-0 mt-10 space-x-4">
+            <div className="text-left">
+              <motion.h3 className="flex text-lg sm:text-xl text-white mb-4 tracking-widest justify-center md:justify-start">
                 <motion.img
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7, duration: 0.5 }}
                   src="/line.svg"
                   className="mr-2 w-4 h-4 sm:w-auto sm:h-auto"
-                  alt="Decorative line separator"
+                  alt="line"
                 />
                 Connect
               </motion.h3>
+
               <motion.div
                 variants={staggerContainer}
                 initial="hidden"
                 animate="visible"
                 className="flex space-x-6 sm:space-x-8 justify-center md:justify-end mt-2"
               >
-
-
-                <motion.a
-                  variants={slideUp}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                  href="https://x.com/Bitcoinwalax?t=pR2Fmib9FeSt6f_PGjGBMQ&s=09"
-                  target="_blank"
-                  className="group relative text-gray-500 hover:text-white transition-colors w-5 h-6 sm:w-6 sm:h-7 inline-block"
-                >
-                  <motion.img
-                    src="x.png"
-                    alt="X (formerly Twitter) logo"
-                    className="absolute w-full h-full transition-opacity duration-1000 opacity-100 group-hover:opacity-0 mr-2"
-                  />
-                  <motion.img
-                    src="x-hover.png"
-                    alt="X (formerly Twitter) logo - hover state"
-                    className="absolute w-full h-full transition-opacity duration-1000 opacity-0 group-hover:opacity-100 mr-2"
-                  />
-                </motion.a>
-
-                <motion.a
-                  variants={slideUp}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                  href="https://www.instagram.com/bitcoinwala.x?igsh=NXhqbjY0NHp2ZnRu"
-                  target="_blank"
-                  className="group relative text-gray-500 hover:text-white transition-colors w-5 h-6 sm:w-6 sm:h-7 inline-block"
-                >
-                  <motion.img
-                    src="insta.png"
-                    alt="Instagram logo"
-                    className="absolute w-full h-full transition-opacity duration-1000 opacity-100 group-hover:opacity-0 mr-2"
-                  />
-                  <motion.img
-                    src="insta-hover.png"
-                    alt="Instagram logo - hover state"
-                    className="absolute w-full h-full transition-opacity duration-1000 opacity-0 group-hover:opacity-100 mr-2"
-                  />
-                </motion.a>
-
-                <motion.a
-                  variants={slideUp}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                  href="https://www.linkedin.com/company/bitcoinwalaofficial"
-                  target="_blank"
-                  className="group relative text-gray-500 hover:text-white transition-colors w-5 h-6 sm:w-6 sm:h-7 inline-block"
-                >
-                  <motion.img
-                    src="linkedin.png"
-                    alt="LinkedIn logo"
-                    className="absolute w-full h-full transition-opacity duration-1000 opacity-100 group-hover:opacity-0 mr-2"
-                  />
-                  <motion.img
-                    src="linkedin-hover.png"
-                    alt="LinkedIn logo - hover state"
-                    className="absolute w-full h-full transition-opacity duration-1000 opacity-0 group-hover:opacity-100 mr-2"
-                  />
-                </motion.a>
-
-                <motion.a
-                  variants={slideUp}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                  href="https://t.me/bitcoinwalax"
-                  target="_blank"
-                  className="group relative text-gray-500 hover:text-white transition-colors w-5 h-6 sm:w-6 sm:h-7 inline-block"
-                >
-                  <motion.img
-                    src="telegram.png"
-                    alt="telegram logo"
-                    className="absolute w-full h-full transition-opacity duration-1000 opacity-100 group-hover:opacity-0 mr-2"
-                  />
-                  <motion.img
-                    src="telegram-hover.png"
-                    alt="telegram logo - hover state"
-                    className="absolute w-full h-full transition-opacity duration-1000 opacity-0 group-hover:opacity-100 mr-2"
-                  />
-                </motion.a>
-
+                {[
+                  {
+                    href: "https://x.com/Bitcoinwalax?t=pR2Fmib9FeSt6f_PGjGBMQ&s=09",
+                    img: "x",
+                  },
+                  {
+                    href: "https://www.instagram.com/bitcoinwala.x?igsh=NXhqbjY0NHp2ZnRu",
+                    img: "insta",
+                  },
+                  {
+                    href: "https://www.linkedin.com/company/bitcoinwalaofficial",
+                    img: "linkedin",
+                  },
+                  { href: "https://t.me/bitcoinwalax", img: "telegram" },
+                ].map((social, index) => (
+                  <motion.a
+                    key={index}
+                    variants={slideUp}
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative w-5 h-6 sm:w-6 sm:h-7"
+                  >
+                    <motion.img
+                      src={`${social.img}.png`}
+                      className="absolute w-full h-full opacity-100 group-hover:opacity-0"
+                    />
+                    <motion.img
+                      src={`${social.img}-hover.png`}
+                      className="absolute w-full h-full opacity-0 group-hover:opacity-100"
+                    />
+                  </motion.a>
+                ))}
               </motion.div>
             </div>
           </motion.div>
         </motion.div>
       </motion.div>
-
       {/* Bottom Arrow */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.5 }}
@@ -424,7 +373,9 @@ function MissionSection({ isMobile }) {
         >
           <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500" />
         </motion.div>
-      </motion.div>
+      </motion.div> */}
+      {/* <Timeline data={timelineData} />; */}
+      {!isMobile && <Timeline data={timelineData} />}
     </motion.section>
   );
 }

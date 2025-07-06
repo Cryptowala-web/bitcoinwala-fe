@@ -3,7 +3,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import CustomAlert from "../components/CustomAlert";
 import { API } from "../api";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { replace, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -33,11 +33,11 @@ export default function Login() {
         localStorage.setItem("user", JSON.stringify(result.user));
         if (result.user.role === "super_admin") {
           setTimeout(() => {
-            navigate("/admin");
+            navigate("/admin",replace);
           }, 1000);
         } else {
           setTimeout(() => {
-            navigate("/dashboard");
+            navigate("/admin",replace);
           }, 1000);
         }
         setFormData({

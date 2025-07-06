@@ -1,238 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitcoin 3D Scroll Animation</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Bitcoin 3D Scroll Animation</title>
+  <script>
+    window.addEventListener("message", (e) => {
+      console.log("Received from parent:", e.data.parallax);
+      console.log(e.data.parallax[0][0])
+    
+    e.data.parallax.forEach((item, index) => {
+      const [title, content] = item;
+      const headingEl = document.getElementById(`heading-${index}`);
+      if (headingEl) {
+        headingEl.innerHTML = title;
+      }
+      const paraEl = document.getElementById(`para-${index}`);
+      if (paraEl) {
+        paraEl.innerHTML = content;
+      }
+    });
+  });
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Orbitron:wght@300;400;500&display=swap');
 
-        :root {
-            --padding: 10vmin;
-            --color-background: #D0CBC7;
-            --font-size-large: 8vw;
-            --font-size-medium: 4vw;
-            --font-size-normal: 2vw;
-        }
 
-        @media only screen and (min-width: 800px) {
-            :root {
-                --font-size-large: 64px;
-                --font-size-medium: 32px;
-                --font-size-normal: 16px;
-            }
-        }
+    ::-webkit-scrollbar {
+  width: 12px;
+}
 
-        @media only screen and (max-width: 500px) {
-            :root {
-                --font-size-large: 40px;
-                --font-size-medium: 20px;
-                --font-size-normal: 14px;
-            }
-        }
+::-webkit-scrollbar-track {
+  background: #000; /* black track */
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+::-webkit-scrollbar-thumb {
+  background-color: #333; /* dark gray thumb */
+  border-radius: 6px;
+  border: 3px solid #000;
+}
 
-        html, body {
-            min-height: 100%;
-            font-family: 'Libre Baskerville', serif;
-            background-color: var(--color-background);
-            font-weight: 400;
-            font-size: var(--font-size-normal);
-            overflow-x: hidden;
-        }
 
-        canvas {
-            position: fixed;
-            z-index: 2;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            visibility: hidden;
-            opacity: 0;
-        }
+    :root {
+      --padding: 10vmin;
+      --color-background: black;
+      --font-size-large: 8vw;
+      --font-size-medium: 4vw;
+      --font-size-normal: 2vw;
+    }
 
-        .content {
-            position: relative;
-            z-index: 1;
-        }
+    @media only screen and (min-width: 800px) {
+      :root {
+        --font-size-large: 64px;
+        --font-size-medium: 32px;
+        --font-size-normal: 16px;
+      }
+    }
 
-        .section {
-            position: relative;
-            padding: var(--padding);
-            width: calc(100vw - calc(var(--padding) * 2));
-            height: calc(100vh - calc(var(--padding) * 2));
-            margin: 0 auto;
-            z-index: 2;
-        }
+    @media only screen and (max-width: 500px) {
+      :root {
+        --font-size-large: 40px;
+        --font-size-medium: 20px;
+        --font-size-normal: 14px;
+      }
 
-        .section.dark {
-            color: white;
-            background-color: black;
-        }
+      .section {
+        padding: 6vmin;
+        width: 90vw;
+      }
 
-        .section.right {
-            text-align: right;
-        }
+      .scroll-cta {
+        bottom: 5vmin;
+        font-size: var(--font-size-normal);
+        text-align: center;
+        left: 0;
+        right: 0;
+      }
 
-        .blueprint {
-            position: relative;
-            background-color: #131C2A;
-            background-image: 
-                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
-                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
-            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-            background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
-            background-attachment: fixed;
-        }
+      h1, h2 {
+        line-height: 1.2;
+      }
 
-        .blueprint svg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            stroke: white;
-            pointer-events: none;
-            visibility: hidden;
-        }
+      p {
+        font-size: 1rem;
+      }
+    }
 
-        .blueprint .dark {
-            background-color: transparent;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .ground-container {
-            position: relative;
-            overflow: hidden;
-        }
+    html, body {
+      min-height: 100%;
+      font-family: "Orbitron", sans-serif;
+      background-color: #000000;
+      font-weight: 400;
+      font-size: var(--font-size-normal);
+      overflow-x: hidden;
+      letter-spacing: 0.2em;
+    }
 
-        .parallax {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: -100px;
-            background-repeat: no-repeat;
-            background-position: top center;
-            background-size: cover;
-            transform-origin: top center;
-        }
+    canvas {
+      position: fixed;
+      z-index: 2;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      visibility: hidden;
+      opacity: 0;
+    }
 
-        .ground {
-            z-index: -1;
-            /* background-image: url("https://assets.codepen.io/557388/background-reduced.jpg"); */
-            background-image: url(bgs/background-reduced-black2.jpg);
-        }
+    .content {
+      position: relative;
+      z-index: 1;
+    }
 
-        .clouds {
-            z-index: 2;
-            background-image: url(bgs/clouds3.png);
-        }
+    .section {
+      position: relative;
+      padding: var(--padding);
+      width: calc(100vw - 2 * var(--padding));
+      height: calc(100vh - 2 * var(--padding));
+      margin: 0 auto;
+      z-index: 2;
+    }
 
-        .sunset {
-            background: url(bgs/sunset-reduced1.jpg) no-repeat top center;
-            background-size: cover;
-            transform-origin: top center;
-        }
+    .section.dark {
+      color: white;
+      background-color: black;
+    }
 
-        .scroll-cta, .credits {
-            position: absolute;
-            bottom: var(--padding);
-        }
+    .section.right {
+      text-align: right;
+    }
 
-        .scroll-cta {
-            font-size: var(--font-size-medium);
-            opacity: 0;
-        }
+    .blueprint {
+      position: relative;
+      background-color: black;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+      background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+      background-attachment: fixed;
+    }
 
-        h1, h2 {
-            font-size: var(--font-size-large);
-            margin: 0vmin 0 2vmin 0;
-            font-weight: 700;
-            display: inline;
-        }
+    .blueprint svg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      stroke: white;
+      pointer-events: none;
+      visibility: hidden;
+    }
 
-        h3 {
-            font-size: var(--font-size-medium);
-            font-weight: 400;
-            margin: 0;
-        }
+    .blueprint .dark {
+      background-color: transparent;
+    }
 
-        .end h2 {
-            margin-bottom: 50vh;
-        }
+    .ground-container {
+      position: relative;
+      overflow: hidden;
+    }
 
-        .loading {
-            position: fixed;
-            width: 100vw;
-            height: 100vh;
-            top: 0;
-            left: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--font-size-medium);
-            z-index: 1000;
-        }
+    .parallax {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: -100px;
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-size: cover;
+      transform-origin: top center;
+    }
 
-        a {
-            color: white;
-        }
+    .ground {
+      z-index: -1;
+      background-image: url(bgs/background-reduced-black2.jpg);
+    }
+/* 
+    .clouds {
+      z-index: 2;
+      background-image: url(bgs/clouds3.png);
+    } */
 
-        ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
+    .sunset {
+      background: url(bgs/pic7.png) no-repeat top center;
+      background-size: contain;
+      transform-origin: top center;
+    }
 
-        li {
-            margin-top: 10px;
-        }
+    .scroll-cta, .credits {
+      position: absolute;
+      bottom: var(--padding);
+    }
 
-        /* SVG Line animations using CSS instead of DrawSVG */
-        .animated-line {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-        }
+    .scroll-cta {
+      font-size: var(--font-size-medium);
+      opacity: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
 
-        .animated-circle {
-            stroke-dasharray: 100;
-            stroke-dashoffset: 100;
-        }
-    </style>
+    h1, h2 {
+      font-size: var(--font-size-large);
+      margin-bottom: 2vmin;
+      font-weight: 300;
+      display: block;
+    }
+
+    h3 {
+      font-size: var(--font-size-medium);
+      font-weight: 300;
+      margin: 0 0 1vmin 0;
+    }
+
+    .end h2 {
+      margin-bottom: 2vh;
+    }
+
+    .loading {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-medium);
+      z-index: 1000;
+    }
+
+    a {
+      color: white;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      margin-top: 10px;
+    }
+
+    .animated-line {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+    }
+
+    .animated-circle {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+    }
+  </style>
 </head>
 <body>
-    <div class="content">
+ 
+    <!-- <div class="content  ">
         <div class="loading">Loading</div>
         <div class="trigger"></div>
-        <div class="section">
-            <h1>Bitcoin.</h1>
-            <h3>The Beginner's Guide.</h3>
-            <p>You've probably heard of it. But what *is* it?</p>
+        <div class="section dark " style="width: inherit" >
+            <h1 style="color: white;">Bitcoin.</h1>
+            <h3 style="color: white;" >The Beginner's Guide.</h3>
+            <p style="color: white;" >You've probably heard of it. But what is it?</p>
             <div class="scroll-cta">Scroll</div>
         </div>
-        <div class="section right">
-            <h2>It's kinda like money...</h2>
+        <div class="section right dark "  style="width: 100vw;" >
+            <h2 style="color: white;" >It's kinda like money...</h2>
         </div>
         <div class="ground-container">
             <div class="parallax ground"></div>
-            <div class="section right">
+            <div class="section right dark "  style="width: 100vw;">
                 <h2>...but on the internet.</h2>
                 <p>Global, borderless, and fast.</p>
             </div>
-            <div class="section">
-                <h2>It's decentralized.</h2>
-                <p>No banks. No middlemen. Just you and the blockchain.</p>
+            <div class="section ">
+                <h2 style="color: white;">It's decentralized.</h2>
+                <p style="color: white;">No banks. No middlemen. Just you and the blockchain.</p>
             </div>
-            <div class="section right">
-                <h2>It's verified by computers.</h2>
-                <p>Thousands of them working together.</p>
+            <div class="section right ">
+                <h2 style="color: white;">It's verified by computers.</h2>
+                <p  style="color: white;" >Thousands of them working together.</p>
             </div>
             <div class="parallax clouds"></div>
         </div>
@@ -266,13 +324,104 @@
         <div class="sunset">
             <div class="section"></div>
             <div class="section end">
-                <h2>The End... or the Beginning?</h2>
-                <ul class="credits">
-                    <li>Bitcoin data powered by <a href="https://bitcoinwala.ai" target="_blank">Bitcoinwala.ai</a></li>
-                </ul>
+                <h2 style="color: white;">The End... or the Beginning?</h2>
             </div>
         </div>
+    </div> -->
+
+
+    iv class="content">
+    <div class="loading">Loading</div>
+    <div class="trigger"></div>
+
+    <div class="section dark">
+      <h2 style="color: white;" id="heading-0">The Future Doesn’t Wait. <br> Neither Do We.</h2>
+      <p style="color: white;" id="para-0">You’ve heard of Bitcoin.<br/>Now meet the ones who are <strong>Leading through it.</strong> <br/> <strong>Owning the next financial era.</strong></p>
+      <div class="scroll-cta">Scroll</div>
     </div>
+
+    <div class="section right dark">
+      <h2 style="color: white;" id="heading-1">It’s not “crypto.”</h2>
+      <p style="color: white;" id="para-1"><strong>It’s monetary firepower.</strong></p>
+    </div>
+
+    <div class="ground-container">
+      <div class="parallax ground"></div>
+
+      <div class="section right dark">
+        <h2 id="heading-3"><strong>Bitcoin is not an experiment.</strong></h2>
+        <p id="para-3">It’s a weapon against inflation.<br/>A borderless, bankless standard of value.</p>
+      </div>
+
+      <div class="section">
+        <h2 id="heading-4" style="color: white;">21 million.</h2>
+        <p id="para-4" style="color: white;">No QE. No bailouts. No games.</p>
+      </div>
+
+      <div class="section right">
+        <h2 id="heading-5" style="color: white;">India Needs a Leader in This Space.</h2>
+        <p id="para-5" style="color: white;">Now it has one.</p>
+      </div>
+
+      <div class="parallax clouds"></div>
+    </div>
+
+    <div class="blueprint">
+      <svg width="100%" height="100%" viewBox="0 0 100 100">
+        <line id="line-length" class="animated-line" x1="10" y1="80" x2="90" y2="80" stroke-width="0.5"></line>
+        <path id="line-wingspan" class="animated-line" d="M10 50, L40 35, M60 35 L90 50" stroke-width="0.5"></path>
+        <circle id="circle-phalange" class="animated-circle" cx="60" cy="60" r="15" fill="transparent" stroke-width="0.5"></circle>
+      </svg>
+
+      <div class="section dark">
+        <h2 id="heading-6">We are <strong>Bitcoinwala.</strong></h2>
+        <p id="para-6">A bold treasury house.<br/>An asset management company that doesn’t follow trends — <strong>we set them.</strong> </p>
+      </div>
+
+      <div class="section dark length">
+        <h2 id="heading-7">We Don’t Manage Coins.</h2>
+        <p id="para-6"><strong>We engineer legacies.</strong>
+        For family offices.<br/>For institutions.<br/>For builders and believers who see the world changing — and move before it does.</p>
+      </div>
+
+      <div class="section dark wingspan">
+        <h2 id="heading-8">Real Value. </h2>
+        <p id="para-8">Real Scarcity. <br/> <strong>Radical Transparency.</strong></p>
+        <p>We hold Bitcoin because <strong>it’s truth in code.</strong> <br/>And we manage it like <strong>dynastic wealth —</strong> <br/>Secure. Strategic. Sovereign.</p>
+      </div>
+
+      <div class="section dark phalange">
+        <h2 id="heading-9">Global Standards. </h2>
+        <p id="para-9">Born in India. <br /> We’re not a startup.<br/>We’re <strong>India’s answer to sovereign-grade crypto capital.</strong> </p>
+      </div>
+
+      <div class="section dark">
+        <h2 id="heading-10">Bitcoinwala is not just a brand.</h2>
+        <p id="para-10">It’s a  <strong>financial fortress.</strong> <br/>A symbol of <strong>what comes next.</strong></p>
+      </div>
+
+      <div class="section dark">
+        <h2 id="heading-11">The End of Fiat Thinking.</h2>
+        <p id="para-11">The Rise of <strong>Bitcoin Powerhouses.</strong></p>
+      </div>
+
+      <div class="section dark">
+        <h2 id="'heading-12"> If you’re still asking why Bitcoin</h2>
+        <p id="para-12">You’re already late.</p>
+        <h2 id="heading-13">If you're asking who to trust with it</h2>
+        <p id="para-13"><strong>You're right on time.</strong></p>
+      </div>
+    </div>
+
+    <div class="sunset">
+      <div class="section"></div>
+      <div class="section end">
+        <h2 id="heading-14" style="color: white;">We Are Bitcoinwala.</h2>
+        <p id="para-14" style="color: white;">Your Wealth. Upgraded. Future-Proofed.<br/>On-Chain.</p>
+      </div>
+    </div>
+  </div>
+
 
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -284,6 +433,7 @@
 
     <script>
         console.clear();
+        
 
         class Scene {
             constructor(model) {
@@ -373,10 +523,23 @@
                     var camera = view.camera;
                     camera.aspect = this.w / this.h;
                     let camZ = (screen.width - (this.w * 1)) / 3;
-                    camera.position.z = camZ < 180 ? 180 : camZ;
+                    camera.position.z = camZ < 180 ? 180 : 100;
+                    console.log("wiodth", this.w)
+                    if (this.w < 500) {
+                      
+                      camera.position.z = 700;
+                      // this.modelGroup.scale.set(0.5, 0.5, 0.5);
+                    } else if (this.w < 900) {
+                      camera.position.z = 500;
+                      // this.modelGroup.scale.set(0.7, 0.7, 0.7);
+                    } else {
+                      camera.position.z = 300;
+                      // this.modelGroup.scale.set(1, 1, 1);
+                    }
+                    camera.aspect = this.w / this.h;
+                    // camera.position.z = 300;
                     camera.updateProjectionMatrix();
                 }
-
                 this.renderer.setSize(this.w, this.h);
                 this.render();
             }
@@ -465,6 +628,7 @@
 
             gsap.set(plane.rotation, {y: tau * -.25});
             gsap.set(plane.position, {x: 80, y: -32, z: -60});
+            
             
             scene.render();
             

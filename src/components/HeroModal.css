@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --dark: #1a1a1a;
+  --purple: #8486aa;
+  --f-5-min: 30;
+  --f-5-max: 120;
+  --fluid-bp: clamp(0rem, 2.5vw, 1rem);
+  --step-5: calc(((var(--f-5-min) / 16) * 1rem) + (var(--f-5-max) - var(--f-5-min)) * var(--fluid-bp));
+}
+
+body {
+  font-family: 'Unbounded', sans-serif;
+  background: var(--dark);
+  color: white;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.smooth-wrapper {
+  position: relative;
+  /* padding-top: 100px; */
+}
+
+.smooth-content {
+  position: relative;
+  z-index: 1;
+  margin-top: 100px;
+}
+
+.hero {
+  min-height: 100vh;
+  padding: 2rem;
+  padding-top: 8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.images {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem;
+  margin-top: 4rem;
+  position: relative;
+  z-index: 1;
+}
+
+.image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  aspect-ratio: 3 / 4;
+  transition: transform 0.4s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.image-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.image-container:hover::before {
+  opacity: 1;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease, filter 0.3s ease;
+  transform-origin: center;
+  z-index: 0;
+}
+
+.image-container:hover img {
+  transform: scale(1.08) rotate(1deg);
+  filter: brightness(1.1);
+}
+
+/* Parallax elements */
+.parallax-element {
+  will-change: transform;
+}
+
+/* Scroll reveal animation */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .images {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .hero {
+    padding: 1rem;
+    padding-top: 6rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .images {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .image-container {
+    aspect-ratio: 4 / 5;
+  }
+}

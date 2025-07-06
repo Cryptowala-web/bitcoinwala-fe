@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+.container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 3rem;
+  padding: 2rem;
+  flex-wrap: wrap;
+  background: black;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.left {
+  flex: 1;
+  min-width: 250px;
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.line {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.letter {
+  display: inline-block;
+  font-size: 4rem;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(-50px);
+  animation: fallIn 0.5s forwards;
+}
+
+@keyframes fallIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.right {
+  flex: 1;
+  min-width: 250px;
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.imageContainer {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.image {
+  width: 100%;
+  border-radius: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-style: preserve-3d;
+}
+
+.firstImage {
+  z-index: 1;
+  animation: rotateFirst 10s linear infinite;
+}
+
+.secondImage {
+  left: -40%; /* overlap by ~40% */
+  z-index: 0;
+  opacity: 0.8;
+  animation: rotateSecond 8s linear infinite;
+}
+
+@keyframes rotateFirst {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes rotateSecond {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(-360deg);
+  }
+}
