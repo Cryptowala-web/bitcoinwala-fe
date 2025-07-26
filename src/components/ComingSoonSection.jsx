@@ -1,19 +1,17 @@
-import React from 'react';
-import { MapPin } from 'lucide-react';
-import Subscribe from './subscribe.jsx';
-import { motion } from 'framer-motion';
-import { useContext } from 'react';
-import { ContentContext } from '../context/ContextProvider.jsx';
+import Subscribe from "./subscribe.jsx";
+import { motion } from "framer-motion";
+import { useContext } from "react";
+import { ContentContext } from "../context/ContextProvider.jsx";
+import GlowingWorldMap from "./WorldMap/Map.tsx";
 
 function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
-  // Animation variants
   const content = useContext(ContentContext);
   const fadeIn = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { duration: 0.8 }
-    }
+      transition: { duration: 0.8 },
+    },
   };
 
   const slideUp = {
@@ -25,70 +23,74 @@ function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
         type: "spring",
         stiffness: 300,
         damping: 25,
-        duration: 0.5
-      }
-    }
+        duration: 0.5,
+      },
+    },
   };
 
   const buttonAnimation = {
     hover: { scale: 1.05 },
-    tap: { scale: 0.95 }
+    tap: { scale: 0.95 },
   };
   return (
     <motion.section
       initial="hidden"
       animate="visible"
       variants={fadeIn}
-      className="py-20 md:py-32 px-4 sm:px-6 md:px-10 bg-black relative  w-full">
-      <motion.div
-        variants={slideUp}
-        className="max-w-6xl mx-auto relative">
-        {/* Green dot and tagline centered */}
+      className="py-20 md:py-32 px-4 sm:px-6 md:px-10 bg-black relative  w-full"
+    >
+      <motion.div variants={slideUp} className="max-w-6xl mx-auto relative">
         <motion.div
           variants={slideUp}
-          className="flex flex-col items-center mb-24">
+          className="flex flex-col items-center mb-24"
+        >
           <motion.div
             variants={slideUp}
             whileHover={{ scale: 1.4 }}
-            className="mb-2">
+            className="mb-2"
+            ow
+          >
             <img src="/greendot.svg" alt="Bitcoin" className="w-8 h-8" />
           </motion.div>
           <motion.p
             variants={slideUp}
             className="text-xl text-[#4c4747] tracking-wider text-center"
-            style={{ letterSpacing: '0.1em' ,color:"white"}}>
-            {content.coming[2] || 'Born Sovereign, Global by Force, Bitcoin by Choice'}
+            style={{ letterSpacing: "0.1em", color: "white" }}
+          >
+            {content.coming[2] ||
+              "Born Sovereign, Global by Force, Bitcoin by Choice"}
           </motion.p>
         </motion.div>
-
         <motion.div
           variants={slideUp}
-          className="flex flex-col md:flex-row">
-          {/* Left side - Coming Soon text */}
+          // className="flex flex-col md:flex-row items-center md:items-start justify-between w-full"
+          className="flex flex-col md:flex-row items-start justify-between w-full"
+        >
           <motion.div
             variants={slideUp}
-            className="md:w-1/2">
+            className="w-full md:w-1/2 text-center md:text-left mb-8 md:mb-0"
+          >
             <motion.h2
               variants={slideUp}
               whileHover={{ scale: 1.05 }}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-gray-100 mb-4 orbitron"
               style={{
-                fontFamily: 'Orbitron, sans-serif',
-                letterSpacing: '0.1em',
-                fontWeight: 300
-              }}>
-              {content.coming[0] || 'Coming Soon..!'}
+                fontFamily: "Orbitron, sans-serif",
+                letterSpacing: "0.1em",
+                fontWeight: 300,
+              }}
+            >
+              {content.coming[0] || "Coming Soon..!"}
             </motion.h2>
 
             <motion.p
               variants={slideUp}
-              className="text-base text-white mb-8 text-xl">
-               {content.coming[1] || 'Join the New Standard'}
+              className="text-base text-white mb-8 text-xl"
+            >
+              {content.coming[1] || "Join the New Standard"}
             </motion.p>
 
-            <motion.div
-              variants={slideUp}
-              className="md:mb-12">
+            <motion.div variants={slideUp}>
               <motion.button
                 className="m-0 p-0 border-none bg-transparent group relative w-fit"
                 onClick={() => setIsSubscribeOpen(true)}
@@ -96,14 +98,11 @@ function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
                 whileTap={buttonAnimation.tap}
                 transition={{ type: "spring", stiffness: 400, damping: 20 }}
               >
-                {/* Default image */}
                 <motion.img
                   src="/subscribe.svg"
                   alt="Subscribe"
                   className="h-10 sm:h-12 md:h-14 transition-opacity duration-300 ease-in-out group-hover:opacity-0"
                 />
-
-                {/* Hover image */}
                 <motion.img
                   src="/subscribearow.png"
                   alt="Subscribe Hover"
@@ -118,29 +117,15 @@ function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
             </motion.div>
           </motion.div>
 
-          {/* Right side - Map */}
           <motion.div
-            variants={slideUp}
-            className=" md:mt-10 top-1/3 md:mt-0 md:w-1/2 md:absolute md:right-0 md:top-1/2 md:transform md:-translate-y-1/4 ">
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="relative group">
-              <motion.img
-                src="/map.png"
-                alt="World Map"
-                className="mx-auto md:mx-0 w-full max-w-[300px] md:max-w-none object-contain opacity-50 group-hover:opacity-0 transition-opacity duration-300"
-                style={{ maxHeight: '523px' }}
-              />
-              <motion.img
-                src="/map-hover.png"
-                alt="World Map Hover"
-                className="absolute inset-0 mx-auto md:mx-0 w-full max-w-[300px] md:max-w-none object-contain opacity-0 group-hover:opacity-50 transition-opacity duration-300"
-                style={{ maxHeight: '523px' }}
-              />
-            </motion.div>
+  variants={slideUp}
+  className="w-full md:w-1/2 flex justify-center md:justify-start items-start"
+>
+  <div className="m-0 p-0 leading-none flex items-start">
+    <GlowingWorldMap />
+  </div>
+</motion.div>
 
-          </motion.div>
         </motion.div>
       </motion.div>
     </motion.section>
