@@ -5,9 +5,11 @@ import AnimatedWhitepaperModal from "./pdf";
 import Subscribe from "./subscribe";
 import whitepaperJSON from "./whitepaper.json";
 import { Timeline } from "./ManifestoTimeLine";
+import { API } from "../api";
+import WhitepaperSection from "./WhitePaperSection";
 
 export function transformWhitePaperData(whitePaperJson) {
-   return whitePaperJson.sections.map((section) => ({
+  return whitePaperJson.sections.map((section) => ({
     title: section.heading,
     content: (
       <div className="space-y-2">
@@ -20,7 +22,7 @@ export function transformWhitePaperData(whitePaperJson) {
           </p>
         ))}
       </div>
-    )
+    ),
   }));
 }
 function MissionSection({ isMobile }) {
@@ -125,7 +127,7 @@ function MissionSection({ isMobile }) {
   };
 
   const timelineData = transformWhitePaperData(data);
-  console.log("tieline", timelineData)
+  console.log("tieline", timelineData);
 
   return (
     <motion.section
@@ -133,7 +135,7 @@ function MissionSection({ isMobile }) {
       initial="hidden"
       animate="visible"
       variants={fadeIn}
-      className="relative min-h-screen w-full flex flex-col justify-center items-center px-4 sm:px-6 md:px-14"
+      className="relative w-full flex flex-col justify-center items-center px-4 sm:px-6 md:px-14"
       style={{
         backgroundColor: "#0A0A0A",
         backgroundImage:
@@ -141,23 +143,7 @@ function MissionSection({ isMobile }) {
         backgroundSize: "20px 20px",
       }}
     >
-      {/* Sticky Logo */}
-      <motion.div
-        ref={logoRef}
-        variants={logoAnimation}
-        whileHover="hover"
-        className={`${
-          isSticky ? "fixed top-0" : "absolute top-8 sm:top-2"
-        } left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300`}
-      >
-        <img
-          src="/logo.svg"
-          alt="Bitcoinwala logo"
-          className="w-auto h-18 sm:h-26"
-        />
-      </motion.div>
       <div ref={anchorRef} className="w-full h-1"></div>
-      {/* Main Content */}
       <motion.div
         variants={staggerContainer}
         className="max-w-7xl w-full relative h-full flex flex-col justify-center py-10 sm:py-0"
@@ -236,7 +222,7 @@ function MissionSection({ isMobile }) {
         </motion.div>
 
         {/* Manifest + Button */}
-        <motion.div
+        {/* <motion.div
           variants={slideUp}
           className={`${
             isMobile
@@ -266,16 +252,16 @@ function MissionSection({ isMobile }) {
               } h-auto cursor-pointer hover:opacity-80 transition-opacity duration-300`}
             />
           </motion.button>
-        </motion.div>
+        </motion.div> */}
 
         {/* Modal Viewer */}
-        <AnimatedWhitepaperModal
+        {/* <AnimatedWhitepaperModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-        />
+        /> */}
 
         {/* Mobile Logo */}
-        {isMobile && (
+        {/* {isMobile && (
           <motion.div variants={slideUp} className="flex justify-center mt-12">
             <motion.div
               whileHover={{ rotate: 360 }}
@@ -294,10 +280,10 @@ function MissionSection({ isMobile }) {
               />
             </motion.div>
           </motion.div>
-        )}
+        )} */}
 
         {/* Connect Section */}
-        <motion.div
+        {/* <motion.div
           variants={slideUp}
           className={`${
             isMobile ? "mt-16 mb-8" : "absolute bottom-1 left-250"
@@ -358,7 +344,7 @@ function MissionSection({ isMobile }) {
               </motion.div>
             </div>
           </motion.div>
-        </motion.div>
+        </motion.div> */}
       </motion.div>
       {/* Bottom Arrow */}
       {/* <motion.div
@@ -375,7 +361,8 @@ function MissionSection({ isMobile }) {
         </motion.div>
       </motion.div> */}
       {/* <Timeline data={timelineData} />; */}
-      {!isMobile && <Timeline data={timelineData} />}
+      {/* {!isMobile && <Timeline data={timelineData} />} */}
+      <WhitepaperSection/>
     </motion.section>
   );
 }

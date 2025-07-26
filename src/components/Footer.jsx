@@ -257,7 +257,7 @@ function Footer() {
           initial="hidden"
           animate="visible"
         >
-          <motion.h3
+          {/* <motion.h3
             className="text-xl sm:text-2xl tracking-widest flex items-center justify-center font-bold"
             variants={textFade}
             initial="hidden"
@@ -265,7 +265,7 @@ function Footer() {
           >
             <img src="/line.svg" alt="line" className="w-4 h-4 mr-2" />
             Connect
-          </motion.h3>
+          </motion.h3> */}
           {socialLinks.map((social, i) => (
             <motion.a
               key={i}

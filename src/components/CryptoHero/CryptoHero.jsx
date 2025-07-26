@@ -1,7 +1,7 @@
-import React from 'react';
-import styles from './CryptoHero.module.css';
+import React from "react";
+import styles from "./CryptoHero.module.css";
 
-const textLines = ["Bit coin", "to", "the"," moon"];
+const textLines = ["Bit coin", "to", "the", " moon"];
 
 const AnimatedSection = () => {
   return (
@@ -23,12 +23,16 @@ const AnimatedSection = () => {
           </div>
         ))}
       </div> */}
-      <div className={styles.right}>
-        <div className={styles.imageContainer}>
-          <img src="/bitlogo.png" alt="Animated" className={`${styles.image} ${styles.firstImage}`} />
-          <img src="/bitlogo-hover.png" alt="Animated" className={`${styles.image} ${styles.secondImage}`} />
-        </div>
+      {/* <div className={styles.right}> */}
+      <div className={styles.imageContainer}>
+        {/* <img src="/bitlogo.png" alt="Animated" className={`${styles.image} ${styles.firstImage}`} /> */}
+        <img
+          src="/bitlogo-hover.png"
+          alt="Animated"
+          className={`${styles.image} ${styles.secondImage}`}
+        />
       </div>
+      {/* </div> */}
     </div>
   );
 };

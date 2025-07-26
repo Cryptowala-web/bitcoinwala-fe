@@ -4,22 +4,21 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 // Import components
-import HeroSection from "../components/HeroSection.jsx";
 import MissionSection from "../components/MissionSection.jsx";
 import ComingSoonSection from "../components/ComingSoonSection.jsx";
 import Footer from "../components/Footer.jsx";
-import Bitcoin3DIframe from "./Bitcoin3DIframe.js";
 import BitcoinTimelineGraph from "../components/TimeLineGraph.jsx";
-import HeroModal from "../components/HeroModal.jsx";
-import CardStack from "../components/CardStack.jsx";
 import { API } from "../api";
-import { JellooText } from "../components/TopSection/TopSection.jsx";
+import  JellooText from "../components/TopSection/TopSection.jsx";
 import Stats from "../components/Stats/Stats.jsx";
 import AnimatedSection from "../components/CryptoHero/CryptoHero.jsx";
 import { MaskContainer } from "../components/Title/Title.jsx";
 import { ThreeDCardDemo } from "../components/AnnouncementDisplay.jsx";
 import { SparklesPreview } from "../components/Sparkleee.jsx";
-
+// import GlobePage from "../components/GlobeConfig.jsx";
+import BitcoinChart from "../components/Chart/BitcoinPriceChart.jsx";
+import BitcoinSentencesDisplay from "../components/Sentences/Sentences.jsx";
+import BitcoinScrollComponent from "../components/ScrollComponent/Scroll.jsx";
 const staticData = [
   {
     title: "Welcome to the Platform",
@@ -83,7 +82,7 @@ function HomePage() {
   };
 
   return (
-    <div className="relative min-h-full bg-black text-white font-['Montserrat',_sans-serif] overflow-y-scroll h-screen hide-scrollbar">
+    <div className="relative min-h-screen w-screen bg-black text-white font-['Montserrat',_sans-serif] overflow-y-scroll h-screen hide-scrollbar">
       {/* Hero Section */}
 
       {/* <motion.div
@@ -120,8 +119,17 @@ function HomePage() {
         viewport={{ once: true, amount: 0.2 }}
         transition={sectionTransition}
       >
-        <Bitcoin3DIframe />
+        <BitcoinSentencesDisplay />
       </motion.div>
+      {/* <motion.div
+        variants={sectionVariants}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={sectionTransition}
+      >
+        <GlobePage />
+      </motion.div> */}
 
       {/* Mission Section */}
       <motion.div
@@ -141,8 +149,9 @@ function HomePage() {
         viewport={{ once: true, amount: 0.2 }}
         transition={sectionTransition}
       >
-        <Stats />
+        <BitcoinChart />
       </motion.div>
+
       <motion.div
         variants={sectionVariants}
         initial="initial"
@@ -153,7 +162,7 @@ function HomePage() {
         <BitcoinTimelineGraph />
       </motion.div>
 
-      <motion.div
+      {/* <motion.div
         variants={sectionVariants}
         initial="initial"
         whileInView="animate"
@@ -161,8 +170,7 @@ function HomePage() {
         transition={sectionTransition}
       >
         <CardStack data={announcementData} />
-        {/* <ThreeDCardDemo announcements={announcementData} /> */}
-      </motion.div>
+      </motion.div> */}
       {/* Coming Soon Section */}
       <motion.div
         variants={sectionVariants}

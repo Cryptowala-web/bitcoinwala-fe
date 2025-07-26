@@ -6,12 +6,10 @@ import GlowingWorldMap from "./WorldMap/Map.tsx";
 
 function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
   const content = useContext(ContentContext);
+
   const fadeIn = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { duration: 0.8 },
-    },
+    visible: { opacity: 1, transition: { duration: 0.8 } },
   };
 
   const slideUp = {
@@ -32,43 +30,41 @@ function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
     hover: { scale: 1.05 },
     tap: { scale: 0.95 },
   };
+
   return (
     <motion.section
       initial="hidden"
       animate="visible"
       variants={fadeIn}
-      className="py-20 md:py-32 px-4 sm:px-6 md:px-10 bg-black relative  w-full"
+      className="py-20 md:py-32 px-4 sm:px-6 md:px-10 bg-black w-full"
     >
-      <motion.div variants={slideUp} className="max-w-6xl mx-auto relative">
+      <motion.div variants={slideUp} className="max-w-6xl mx-auto">
+        {/* Top Centered Tagline */}
         <motion.div
           variants={slideUp}
-          className="flex flex-col items-center mb-24"
+          className="flex flex-col items-center mb-16"
         >
-          <motion.div
-            variants={slideUp}
-            whileHover={{ scale: 1.4 }}
-            className="mb-2"
-            ow
-          >
+          <motion.div variants={slideUp} whileHover={{ scale: 1.4 }} className="mb-2">
             <img src="/greendot.svg" alt="Bitcoin" className="w-8 h-8" />
           </motion.div>
           <motion.p
             variants={slideUp}
-            className="text-xl text-[#4c4747] tracking-wider text-center"
-            style={{ letterSpacing: "0.1em", color: "white" }}
+            className="text-xl tracking-wider text-center text-white mb-10"
+            style={{ letterSpacing: "0.1em" }}
           >
-            {content.coming[2] ||
-              "Born Sovereign, Global by Force, Bitcoin by Choice"}
+            {content.coming[2] || "Born Sovereign, Global by Force, Bitcoin by Choice"}
           </motion.p>
         </motion.div>
+
+        {/* Main Flex Row */}
         <motion.div
           variants={slideUp}
-          // className="flex flex-col md:flex-row items-center md:items-start justify-between w-full"
-          className="flex flex-col md:flex-row items-start justify-between w-full"
+          className="flex flex-col md:flex-row items-start justify-between w-full gap-8"
         >
+          {/* Left Column */}
           <motion.div
             variants={slideUp}
-            className="w-full md:w-1/2 text-center md:text-left mb-8 md:mb-0"
+            className="w-full md:w-1/2 text-center md:text-left"
           >
             <motion.h2
               variants={slideUp}
@@ -117,15 +113,15 @@ function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
             </motion.div>
           </motion.div>
 
+          {/* Right Column: Map */}
           <motion.div
-  variants={slideUp}
-  className="w-full md:w-1/2 flex justify-center md:justify-start items-start"
->
-  <div className="m-0 p-0 leading-none flex items-start">
-    <GlowingWorldMap />
-  </div>
-</motion.div>
-
+            variants={slideUp}
+            className="w-full md:w-1/2 flex justify-center md:justify-start items-start"
+          >
+            <div className="leading-none sm:-mt-10 md:-mt-20 p-0">
+              <GlowingWorldMap />
+            </div>
+          </motion.div>
         </motion.div>
       </motion.div>
     </motion.section>

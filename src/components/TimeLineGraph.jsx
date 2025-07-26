@@ -156,13 +156,27 @@ const BitcoinTimelineGraph = () => {
   }, [hovered]);
 
   return (
-    <div className="bg-black text-white overflow-hidden flex flex-col items-center justify-center px-4" style={{ fontFamily: "'Orbitron', sans-serif" }}>
-      <h1 className="text-3xl sm:text-5xl font-bold mb-8 text-white text-center">
-        {content.timeline || 'Bitcoin Evolution Timeline'}
+    <div
+      className="mt-5 bg-black text-white overflow-x-hidden flex flex-col items-center justify-center px-4"
+      style={{ fontFamily: "'Orbitron', sans-serif" }}
+    >
+      {/* <h1 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-bold mb-6 text-white text-center">
+  {content.timeline || "Bitcoin Evolution Timeline"}
+</h1> */}
+      <h1
+        className="font-bold mb-6 text-white text-center"
+        style={{
+          fontSize: "clamp(0.875rem, 4vw, 1.75rem)", // between 14px and 28px depending on screen size
+        }}
+      >
+        {content.timeline || "Bitcoin Evolution Timeline"}
       </h1>
 
-      <div ref={trackRef} className="relative w-full max-w-7xl overflow-hidden">
-        <div className="flex whitespace-nowrap gap-8 py-8">
+      <div
+        ref={trackRef}
+        className="relative w-screen max-w-7xl overflow-hidden"
+      >
+        <div className="flex  gap-8 py-8">
           {[...timelineData, ...timelineData].map((node, i) => {
             const Icon = node.icon;
             const isHovered = hovered === i;
@@ -184,9 +198,9 @@ const BitcoinTimelineGraph = () => {
               >
                 <div
                   className={`
-                     flex flex-col justify-start gap-4 min-h-[220px]
+                     flex flex-col justify-start gap-4 min-h-[220px] 
 ${isHovered ? "max-h-[500px]" : "max-h-[220px]"}
-                      rounded-xl border border-white/10 p-4
+                      rounded-xl border border-white/10 
                       bg-gradient-to-br from-white/5 to-white/10
                       backdrop-blur-md
                       hover:shadow-xl
@@ -194,28 +208,28 @@ ${isHovered ? "max-h-[500px]" : "max-h-[220px]"}
                       overflow-hidden
                 `}
                 >
-                  <div className="flex justify-start gap-10 items-center mb-2">
-                    <div className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10">
-                      <Icon size={24} className="text-white" />
+                  <div className="flex flex-col justify-start">
+                    <div className="absolute -top-5 -left-5 w-20 h-20 z-0 rounded-full overflow-hidden">
+                      <img
+                        src="/bit1.png"
+                        alt="Bitcoin"
+                        className="object-cover"
+                      />
                     </div>
-                    <span className="text-xs sm:text-sm text-gray-300 font-semibold">
-                      {node.year}
-                    </span>
                   </div>
 
-                  <h2 className="text-base sm:text-lg font-bold mb-1 text-white break-words whitespace-normal">
+                  <h2 className=" flex flex-col mt-12 gap-1 text-center text-base sm:text-lg font-bold mb-1 text-white break-words whitespace-normal">
+                    <span className="text-xs sm:text-sm text-gray-300 font-semibold p-1">
+                      {node.year}
+                    </span>
                     {node.event}
                   </h2>
 
                   <div
                     className={`
-      text-[10px] sm:text-xs text-gray-300
-      transition-all duration-300
-      ${
-        isHovered
-          ? "opacity-100  mt-2 break-words whitespace-normal"
-          : "opacity-0 max-h-0"
-      }
+      text-[6px] sm:text-xs text-gray-300 p-4 text-center
+transition-opacity duration-[2000ms] ease-in-out delay-150
+      ${isHovered ? "opacity-100  mt-2 whitespace-normal" : "opacity-0 max-h-0"}
       overflow-y-auto
     `}
                     style={{
