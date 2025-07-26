@@ -5,7 +5,7 @@ import { SparklesCore } from "./Sparkles";
 export function SparklesPreview() {
   return (
     <div
-      className="h-[350px] w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md">
+      className="h-[350px] w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md -mt-30">
       <h1
         className="md:text-7xl text-3xl lg:text-9xl font-bold text-center text-white relative z-20" style={{ fontFamily: "'Orbitron', sans-serif" }} >
         Bitcoinwala
