@@ -54,9 +54,8 @@ function MissionSection({ isMobile }) {
 
   const fetchWhitepaper = async () => {
     const res = await fetch(`${API}/admin/api/whitepaper`);
-    const data = await res.json();
-    console.log("data", data);
-    setData(data);
+    const data1 = await res.json();
+    setData(data1);
   };
 
   useEffect(() => {
@@ -196,7 +195,6 @@ function MissionSection({ isMobile }) {
             </motion.div>
           </motion.div>
 
-          {/* Desktop Logo */}
           {!isMobile && (
             <motion.div variants={slideUp} className="flex-shrink-0 ml-80">
               <motion.div
@@ -209,160 +207,19 @@ function MissionSection({ isMobile }) {
                 <motion.img
                   src="bitlogo.png"
                   alt="bitlogo"
-                  className="absolute w-30 h-auto opacity-100 group-hover:opacity-0"
+                  className="absolute w-60 h-auto opacity-100 group-hover:opacity-0"
                 />
                 <motion.img
                   src="bitlogo-hover.png"
                   alt="bitlogo-hover"
-                  className="absolute w-30 h-auto opacity-0 group-hover:opacity-100"
+                  className="absolute w-60 h-auto opacity-0 group-hover:opacity-100"
                 />
               </motion.div>
             </motion.div>
           )}
         </motion.div>
-
-        {/* Manifest + Button */}
-        {/* <motion.div
-          variants={slideUp}
-          className={`${
-            isMobile
-              ? "flex flex-col items-center mt-16 space-y-6"
-              : "ml-8 mt-32"
-          }`}
-        >
-          <motion.img
-            transition={{ type: "spring", stiffness: 300, damping: 15 }}
-            src="manifest.png"
-            alt="bitcoinwala"
-            className={`${
-              isMobile ? "max-w-[200px] sm:max-w-[250px]" : "max-w-xs"
-            } h-auto cursor-pointer`}
-          />
-          <motion.button
-            onClick={() => setIsModalOpen(true)}
-            className="group relative mt-4"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <motion.img
-              src="accessnow.png"
-              alt="access now"
-              className={`${
-                isMobile ? "max-w-[180px] sm:max-w-[200px]" : "max-w-56"
-              } h-auto cursor-pointer hover:opacity-80 transition-opacity duration-300`}
-            />
-          </motion.button>
-        </motion.div> */}
-
-        {/* Modal Viewer */}
-        {/* <AnimatedWhitepaperModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        /> */}
-
-        {/* Mobile Logo */}
-        {/* {isMobile && (
-          <motion.div variants={slideUp} className="flex justify-center mt-12">
-            <motion.div
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 1, ease: "easeInOut" }}
-              className="relative group w-20 h-20 rounded-full flex items-center justify-center border border-gray-700"
-            >
-              <motion.img
-                src="bitlogo.png"
-                alt="Logo"
-                className="absolute w-full h-full opacity-100 group-hover:opacity-0"
-              />
-              <motion.img
-                src="bitlogo-hover.png"
-                alt="Logo Hover"
-                className="absolute w-full h-full opacity-0 group-hover:opacity-100"
-              />
-            </motion.div>
-          </motion.div>
-        )} */}
-
-        {/* Connect Section */}
-        {/* <motion.div
-          variants={slideUp}
-          className={`${
-            isMobile ? "mt-16 mb-8" : "absolute bottom-1 left-250"
-          }`}
-        >
-          <motion.div className="flex items-end justify-center md:justify-end px-4 md:px-0 mt-10 space-x-4">
-            <div className="text-left">
-              <motion.h3 className="flex text-lg sm:text-xl text-white mb-4 tracking-widest justify-center md:justify-start">
-                <motion.img
-                  src="/line.svg"
-                  className="mr-2 w-4 h-4 sm:w-auto sm:h-auto"
-                  alt="line"
-                />
-                Connect
-              </motion.h3>
-
-              <motion.div
-                variants={staggerContainer}
-                initial="hidden"
-                animate="visible"
-                className="flex space-x-6 sm:space-x-8 justify-center md:justify-end mt-2"
-              >
-                {[
-                  {
-                    href: "https://x.com/Bitcoinwalax?t=pR2Fmib9FeSt6f_PGjGBMQ&s=09",
-                    img: "x",
-                  },
-                  {
-                    href: "https://www.instagram.com/bitcoinwala.x?igsh=NXhqbjY0NHp2ZnRu",
-                    img: "insta",
-                  },
-                  {
-                    href: "https://www.linkedin.com/company/bitcoinwalaofficial",
-                    img: "linkedin",
-                  },
-                  { href: "https://t.me/bitcoinwalax", img: "telegram" },
-                ].map((social, index) => (
-                  <motion.a
-                    key={index}
-                    variants={slideUp}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.9 }}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative w-5 h-6 sm:w-6 sm:h-7"
-                  >
-                    <motion.img
-                      src={`${social.img}.png`}
-                      className="absolute w-full h-full opacity-100 group-hover:opacity-0"
-                    />
-                    <motion.img
-                      src={`${social.img}-hover.png`}
-                      className="absolute w-full h-full opacity-0 group-hover:opacity-100"
-                    />
-                  </motion.a>
-                ))}
-              </motion.div>
-            </div>
-          </motion.div>
-        </motion.div> */}
       </motion.div>
-      {/* Bottom Arrow */}
-      {/* <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.5 }}
-        className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 5, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500" />
-        </motion.div>
-      </motion.div> */}
-      {/* <Timeline data={timelineData} />; */}
-      {/* {!isMobile && <Timeline data={timelineData} />} */}
-      <WhitepaperSection/>
+      <WhitepaperSection data={data} />
     </motion.section>
   );
 }
