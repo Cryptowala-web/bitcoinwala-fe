@@ -160,13 +160,10 @@ const BitcoinTimelineGraph = () => {
       className="mt-5 bg-black text-white overflow-x-hidden flex flex-col items-center justify-center px-4"
       style={{ fontFamily: "'Orbitron', sans-serif" }}
     >
-      {/* <h1 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-bold mb-6 text-white text-center">
-  {content.timeline || "Bitcoin Evolution Timeline"}
-</h1> */}
       <h1
         className="font-bold mb-6 text-white text-center"
         style={{
-          fontSize: "clamp(0.875rem, 4vw, 1.75rem)", // between 14px and 28px depending on screen size
+          fontSize: "clamp(0.875rem, 4vw, 1.75rem)",
         }}
       >
         {content.timeline || "Bitcoin Evolution Timeline"}
@@ -192,8 +189,8 @@ const BitcoinTimelineGraph = () => {
                   ${isHovered ? "scale-110 z-10" : "scale-100"}
                 `}
                 style={{
-                  width: isHovered ? "250px" : "200px",
-                  height: isHovered ? "350px" : "220px",
+                  width: isHovered ? "250px" : "220px",
+                  height: isHovered ? "350px" : "240px",
                 }}
               >
                 <div

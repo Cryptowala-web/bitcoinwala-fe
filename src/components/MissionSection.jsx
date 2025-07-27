@@ -228,16 +228,13 @@ function MissionSection({ isMobile }) {
       variants={fadeIn}
       className="relative w-full flex flex-col justify-center items-center px-4 sm:px-6 md:px-14"
       style={{
-        backgroundColor: "#0A0A0A",
-        backgroundImage:
-          "radial-gradient(circle, rgba(255,255,255,0.05) 2px, transparent 1px)",
-        backgroundSize: "20px 20px",
+        backgroundColor: "black",
       }}
     >
       <div ref={anchorRef} className="w-full h-1"></div>
       <motion.div
         variants={staggerContainer}
-        className="max-w-7xl w-full relative h-full flex flex-col justify-center py-10 sm:py-0"
+        className="max-w-7xl w-full relative h-full flex flex-col justify-center py-10 sm:py-0 mb-20"
       >
         <motion.div
           variants={slideUp}
@@ -258,7 +255,7 @@ function MissionSection({ isMobile }) {
               <motion.img
                 src="missiontext.png"
                 alt="Mission"
-                className="w-full"
+                className="w-full max-w-xs sm:max-w-[300px] md:max-w-[600px] lg:max-w-[800px]"
                 initial={{ y: 0, opacity: 1 }}
                 variants={{
                   initial: { y: 0, opacity: 1 },
@@ -269,7 +266,7 @@ function MissionSection({ isMobile }) {
               <motion.img
                 src="missiontext-hover.png"
                 alt="Mission Hover"
-                className="absolute top-0 left-0 w-full"
+                className="absolute top-0 left-0 w-full max-w-[300px] sm:max-w-sm md:max-w-[500px] lg:max-w-[800px]"
                 initial={{ y: "50%", opacity: 0 }}
                 variants={{
                   initial: { y: "50%", opacity: 0 },
@@ -290,7 +287,7 @@ function MissionSection({ isMobile }) {
                 rotate: [0, -5, 5, -5, 0],
                 transition: { duration: 1 },
               }}
-              className="relative group w-48 h-48 sm:w-56 sm:h-56 lg:w-60 lg:h-60"
+              className="relative group w-30 h-30 sm:w-56 sm:h-56 lg:w-50 lg:h-50"
             >
               <motion.img
                 src="bitlogo.png"

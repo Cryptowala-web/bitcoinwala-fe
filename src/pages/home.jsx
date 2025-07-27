@@ -103,7 +103,7 @@ function HomePage() {
       >
         <JellooText />
       </motion.div>
-      <motion.div
+      {/* <motion.div
         variants={sectionVariants}
         initial="initial"
         whileInView="animate"
@@ -111,7 +111,7 @@ function HomePage() {
         transition={sectionTransition}
       >
         <AnimatedSection />
-      </motion.div>
+      </motion.div> */}
       <motion.div
         variants={sectionVariants}
         initial="initial"

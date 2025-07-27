@@ -36,7 +36,7 @@ function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
       initial="hidden"
       animate="visible"
       variants={fadeIn}
-      className="py-20 md:py-32 px-4 sm:px-6 md:px-10 bg-black w-full"
+      className="my-10 py-20 md:py-32 px-4 sm:px-6 md:px-10 bg-black w-full"
     >
       <motion.div variants={slideUp} className="max-w-6xl mx-auto">
         {/* Top Centered Tagline */}
@@ -44,15 +44,20 @@ function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
           variants={slideUp}
           className="flex flex-col items-center mb-16"
         >
-          <motion.div variants={slideUp} whileHover={{ scale: 1.4 }} className="mb-2">
+          <motion.div
+            variants={slideUp}
+            whileHover={{ scale: 1.4 }}
+            className="mb-2"
+          >
             <img src="/greendot.svg" alt="Bitcoin" className="w-8 h-8" />
           </motion.div>
           <motion.p
             variants={slideUp}
-            className="text-xl tracking-wider text-center text-white mb-10"
+            className="text-xl tracking-wider text-center text-white mb-20"
             style={{ letterSpacing: "0.1em" }}
           >
-            {content.coming[2] || "Born Sovereign, Global by Force, Bitcoin by Choice"}
+            {content.coming[2] ||
+              "Born Sovereign, Global by Force, Bitcoin by Choice"}
           </motion.p>
         </motion.div>
 
@@ -69,7 +74,7 @@ function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
             <motion.h2
               variants={slideUp}
               whileHover={{ scale: 1.05 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-gray-100 mb-4 orbitron"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light text-gray-100 mb-4 orbitron mt-5"
               style={{
                 fontFamily: "Orbitron, sans-serif",
                 letterSpacing: "0.1em",
@@ -113,7 +118,6 @@ function ComingSoonSection({ isSubscribeOpen, setIsSubscribeOpen }) {
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Map */}
           <motion.div
             variants={slideUp}
             className="w-full md:w-1/2 flex justify-center md:justify-start items-start"

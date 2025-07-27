@@ -238,34 +238,15 @@ function Footer() {
 
   return (
     <footer
-      className="bg-[#0f0f0f] text-white w-full px-4 py-10 mt-10"
+      className="bg-[#0f0f0f] text-white w-full px-4 py-10 "
       style={{ fontFamily: "'Orbitron', sans-serif" }}
     >
       <div className="max-w-5xl mx-auto flex flex-col items-center text-center space-y-6">
-        {/* <motion.h3
-          className="text-xl sm:text-2xl tracking-widest flex items-center justify-center"
-          variants={textFade}
-          initial="hidden"
-          animate="visible"
-        >
-          <img src="/line.svg" alt="line" className="w-4 h-4 mr-2" />
-          Connect
-        </motion.h3> */}
-
         <motion.div
           className="flex space-x-6 sm:space-x-8 justify-center"
           initial="hidden"
           animate="visible"
         >
-          {/* <motion.h3
-            className="text-xl sm:text-2xl tracking-widest flex items-center justify-center font-bold"
-            variants={textFade}
-            initial="hidden"
-            animate="visible"
-          >
-            <img src="/line.svg" alt="line" className="w-4 h-4 mr-2" />
-            Connect
-          </motion.h3> */}
           {socialLinks.map((social, i) => (
             <motion.a
               key={i}
@@ -316,14 +297,14 @@ function Footer() {
         </div>
 
         <motion.hr
-          className="w-full border-t border-gray-800 my-4"
+          className="w-full border-t border-gray-800 mt-4"
           initial={{ width: 0 }}
           animate={{ width: "100%" }}
           transition={{ duration: 1.2 }}
         />
 
         <motion.p
-          className="text-s text-gray-500"
+          className="text-s text-gray-500 -mb-5"
           variants={textFade}
           custom={4}
           initial="hidden"

@@ -66,6 +66,13 @@ svg {
   }
 }
 
+.recharts-wrapper {
+  outline: none !important;
+}
+
+.recharts-wrapper * {
+  outline: none !important;
+}
 /* Custom scrollbar styles */
 /* index.css */
 .hide-scrollbar::-webkit-scrollbar {
