@@ -129,6 +129,98 @@ function MissionSection({ isMobile }) {
   console.log("tieline", timelineData);
 
   return (
+    // <motion.section
+    //   ref={sectionRef}
+    //   initial="hidden"
+    //   animate="visible"
+    //   variants={fadeIn}
+    //   className="relative w-full flex flex-col justify-center items-center px-4 sm:px-6 md:px-14"
+    //   style={{
+    //     backgroundColor: "#0A0A0A",
+    //     backgroundImage:
+    //       "radial-gradient(circle, rgba(255,255,255,0.05) 2px, transparent 1px)",
+    //     backgroundSize: "20px 20px",
+    //   }}
+    // >
+    //   <div ref={anchorRef} className="w-full h-1"></div>
+    //   <motion.div
+    //     variants={staggerContainer}
+    //     className="max-w-7xl w-full relative h-full flex flex-col justify-center py-10 sm:py-0"
+    //   >
+    //     <motion.div
+    //       variants={slideUp}
+    //       className={`flex ${
+    //         isMobile
+    //           ? "flex-col items-center space-y-12"
+    //           : "items-start space-x-4"
+    //       } mt-8 sm:mt-12 md:mt-20 px-2 sm:px-4`}
+    //     >
+    //       {/* Mission Image Block */}
+    //       <motion.div
+    //         variants={slideUp}
+    //         // className={
+    //         //   isMobile ? "mt-20 w-full flex flex-col items-center" : ""
+    //         // }
+    //       >
+    //         <motion.div
+    //           variants={imageScaleVariant}
+    //           transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    //           className={`relative group overflow-hidden ${
+    //             isMobile ? "w-full max-w-sm" : "w-full max-w-[56rem]"
+    //           } h-auto`}
+    //           whileHover="hover"
+    //         >
+    //           <motion.img
+    //             src="missiontext.png"
+    //             alt="Mission"
+    //             className="w-full"
+    //             initial={{ y: 0, opacity: 1 }}
+    //             variants={{
+    //               initial: { y: 0, opacity: 1 },
+    //               hover: { y: "-50%", opacity: 0 },
+    //             }}
+    //             transition={{ duration: 0.3, ease: "easeInOut" }}
+    //           />
+    //           <motion.img
+    //             src="missiontext-hover.png"
+    //             alt="Mission Hover"
+    //             className="absolute top-0 left-0 w-full"
+    //             initial={{ y: "50%", opacity: 0 }}
+    //             variants={{
+    //               initial: { y: "50%", opacity: 0 },
+    //               hover: { y: 0, opacity: 1 },
+    //             }}
+    //             transition={{ duration: 0.3, ease: "easeInOut" }}
+    //           />
+    //         </motion.div>
+    //       </motion.div>
+
+    //       {!isMobile && (
+    //         <motion.div variants={slideUp} className="flex-shrink-0 ml-80">
+    //           <motion.div
+    //             whileHover={{
+    //               rotate: [0, -5, 5, -5, 0],
+    //               transition: { duration: 1 },
+    //             }}
+    //             className="relative group w-30 h-30"
+    //           >
+    //             <motion.img
+    //               src="bitlogo.png"
+    //               alt="bitlogo"
+    //               className="absolute w-60 h-auto opacity-100 group-hover:opacity-0"
+    //             />
+    //             <motion.img
+    //               src="bitlogo-hover.png"
+    //               alt="bitlogo-hover"
+    //               className="absolute w-60 h-auto opacity-0 group-hover:opacity-100"
+    //             />
+    //           </motion.div>
+    //         </motion.div>
+    //       )}
+    //     </motion.div>
+    //   </motion.div>
+    //   <WhitepaperSection data={data} />
+    // </motion.section>
     <motion.section
       ref={sectionRef}
       initial="hidden"
@@ -149,25 +241,18 @@ function MissionSection({ isMobile }) {
       >
         <motion.div
           variants={slideUp}
-          className={`flex ${
-            isMobile
-              ? "flex-col items-center space-y-12"
-              : "items-start space-x-4"
-          } mt-8 sm:mt-12 md:mt-20 px-2 sm:px-4`}
+          className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 lg:gap-12 mt-8 sm:mt-12 md:mt-20 px-2 sm:px-4"
         >
           {/* Mission Image Block */}
           <motion.div
             variants={slideUp}
-            className={
-              isMobile ? "mt-20 w-full flex flex-col items-center" : ""
-            }
+            className="w-full lg:flex-1 flex justify-center lg:justify-start"
           >
             <motion.div
               variants={imageScaleVariant}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className={`relative group overflow-hidden ${
-                isMobile ? "w-full max-w-sm" : "w-full max-w-[56rem]"
-              } h-auto`}
+              // className="relative group overflow-hidden w-full max-w-sm lg:max-w-none h-auto"
+              className="relative group overflow-hidden w-full max-w-md sm:max-w-lg lg:max-w-none h-auto"
               whileHover="hover"
             >
               <motion.img
@@ -195,28 +280,30 @@ function MissionSection({ isMobile }) {
             </motion.div>
           </motion.div>
 
-          {!isMobile && (
-            <motion.div variants={slideUp} className="flex-shrink-0 ml-80">
-              <motion.div
-                whileHover={{
-                  rotate: [0, -5, 5, -5, 0],
-                  transition: { duration: 1 },
-                }}
-                className="relative group w-30 h-30"
-              >
-                <motion.img
-                  src="bitlogo.png"
-                  alt="bitlogo"
-                  className="absolute w-60 h-auto opacity-100 group-hover:opacity-0"
-                />
-                <motion.img
-                  src="bitlogo-hover.png"
-                  alt="bitlogo-hover"
-                  className="absolute w-60 h-auto opacity-0 group-hover:opacity-100"
-                />
-              </motion.div>
+          {/* Logo Block */}
+          <motion.div
+            variants={slideUp}
+            className="w-full lg:flex-shrink-0 lg:w-auto flex justify-center lg:justify-end"
+          >
+            <motion.div
+              whileHover={{
+                rotate: [0, -5, 5, -5, 0],
+                transition: { duration: 1 },
+              }}
+              className="relative group w-48 h-48 sm:w-56 sm:h-56 lg:w-60 lg:h-60"
+            >
+              <motion.img
+                src="bitlogo.png"
+                alt="bitlogo"
+                className="absolute w-full h-auto opacity-100 group-hover:opacity-0 transition-opacity duration-300"
+              />
+              <motion.img
+                src="bitlogo-hover.png"
+                alt="bitlogo-hover"
+                className="absolute w-full h-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              />
             </motion.div>
-          )}
+          </motion.div>
         </motion.div>
       </motion.div>
       <WhitepaperSection data={data} />
