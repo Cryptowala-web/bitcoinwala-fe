@@ -19,6 +19,7 @@ import { SparklesPreview } from "../components/Sparkleee.jsx";
 import BitcoinChart from "../components/Chart/BitcoinPriceChart.jsx";
 import BitcoinSentencesDisplay from "../components/Sentences/Sentences.jsx";
 import BitcoinScrollComponent from "../components/ScrollComponent/Scroll.jsx";
+import Navbar from "../components/Navbar.jsx";
 const staticData = [
   {
     title: "Welcome to the Platform",
@@ -85,15 +86,15 @@ function HomePage() {
     <div className="relative min-h-screen w-screen bg-black text-white font-['Montserrat',_sans-serif] overflow-y-scroll h-screen hide-scrollbar">
       {/* Hero Section */}
 
-      {/* <motion.div
+      <motion.div
         variants={sectionVariants}
         initial="initial"
         whileInView="animate"
         viewport={{ once: true, amount: 0.2 }}
         transition={sectionTransition}
       >
-        <ThreeDCardDemo/>
-      </motion.div> */}
+        <Navbar/>
+      </motion.div>
       <motion.div
         variants={sectionVariants}
         initial="initial"

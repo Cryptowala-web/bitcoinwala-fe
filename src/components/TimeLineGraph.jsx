@@ -61,6 +61,13 @@ const timelineData = [
     icon: DollarSign,
   },
   {
+    year: "2015",
+    event: "Bitcoin sees infrastructure improvements",
+    details:
+      "In 2015, Bitcoin development focused on scalability and security, with the launch of projects like the Lightning Network concept.",
+    icon: Globe,
+  },
+  {
     year: "2016",
     event: "Second Bitcoin halving",
     details:
@@ -82,6 +89,13 @@ const timelineData = [
     icon: DollarSign,
   },
   {
+    year: "2019",
+    event: "Institutional interest grows",
+    details:
+      "2019 saw growing institutional interest in Bitcoin, with firms like Fidelity and Bakkt entering the space.",
+    icon: Globe,
+  },
+  {
     year: "2020",
     event: "Third Bitcoin halving",
     details:
@@ -90,16 +104,9 @@ const timelineData = [
   },
   {
     year: "2021",
-    event: "El Salvador adopts Bitcoin",
+    event: "Bitcoin adoption and ATH",
     details:
-      "El Salvador became the first country to accept Bitcoin as legal tender, setting a major global precedent.",
-    icon: Landmark,
-  },
-  {
-    year: "2021",
-    event: "Bitcoin reaches $69,000",
-    details:
-      "In November 2021, Bitcoin hit an all-time high price of around $69,000 amid significant institutional investment.",
+      "El Salvador adopted Bitcoin as legal tender, and BTC reached an all-time high of $69,000 amid institutional inflows.",
     icon: TrendingUp,
   },
   {
@@ -111,9 +118,9 @@ const timelineData = [
   },
   {
     year: "2023",
-    event: "ETF Applications surge",
+    event: "ETF applications surge",
     details:
-      "Multiple Bitcoin ETF applications gained traction in 2023, signaling institutional adoption.",
+      "Multiple Bitcoin ETF applications gained traction in 2023, signaling increasing institutional adoption.",
     icon: Globe,
   },
   {
@@ -123,7 +130,15 @@ const timelineData = [
       "In 2024, the block reward reduced from 6.25 BTC to 3.125 BTC, tightening new supply and fueling speculation.",
     icon: Zap,
   },
+  {
+    year: "2025",
+    event: "Global Bitcoin regulation framework expected",
+    details:
+      "Many expect 2025 to bring clearer global regulations for Bitcoin and crypto, fostering broader institutional acceptance.",
+    icon: Landmark,
+  },
 ];
+
 
 const BitcoinTimelineGraph = () => {
   const [hovered, setHovered] = useState(null);

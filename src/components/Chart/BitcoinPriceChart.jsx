@@ -52,9 +52,8 @@ const BitcoinChart = () => {
       style={{ fontFamily: "'Orbitron', sans-serif" }}
     >
       <div className="flex justify-between items-start mb-4">
-        <h2 className="text-xl sm:text-2xl font-bold">Bitcoin Price</h2>
+        <h2 className="text-xl sm:text-2xl font-bold">Bitcoin</h2>
         <p className="text-lg sm:text-xl text-gray-300">
-          Current Price:{" "}
           <span className="text-white font-semibold">
             {currentPrice ? `$${currentPrice.toLocaleString()}` : "Loading..."}
           </span>
@@ -117,7 +116,6 @@ const BitcoinChart = () => {
                     fill="white"
                     stroke="gray"
                     strokeWidth={2}
-
                     className={isLast ? "glow-line animate-pulse" : ""}
                   />
                 );
